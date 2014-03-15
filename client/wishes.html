@@ -1,7 +1,10 @@
 
 <head>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <link rel="stylesheet" href="/css/leaflet.contextmenu.css" />
+
   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  <script src="/js/leaflet.contextmenu.js"></script>
 
   <title>Wish Temple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,21 +101,21 @@
 
         <div class="rsvp-buttons">
           {{#if currentUser}}
-            <input type="button" value="I'm going!"
+            <input type="button" value="Fulfill Wish!"
                    class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
             <input type="button" value="Maybe"
                    class="btn btn-small rsvp_maybe {{maybeChosen "maybe"}}">
             <input type="button" value="No"
                    class="btn btn-small rsvp_no {{maybeChosen "no"}}">
           {{else}}
-            <i>Sign in to RSVP for this wish.</i>
+            <i>Sign in to fulfil this wish.</i>
           {{/if}}
           <p><small>Posted by {{creatorName}}</small></p>
         </div>
 
         {{#if canRemove}}
           <div class="alert alert-info"><small>
-              You posted this wish and nobody is signed up to go, so if
+              You posted this wish and nobody has sent fulfillment offer, so if
               you like, you could
               <b><a href="#" class="remove">delete this listing</a></b>.
           </small></div>
@@ -232,5 +235,3 @@
     </div>
   </div>
 </template>
-
-

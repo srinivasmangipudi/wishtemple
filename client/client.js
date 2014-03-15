@@ -280,11 +280,74 @@ Template.inviteDialog.displayName = function () {
 // Wishmap functions
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
-    var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
 
-    L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
+  var tile = L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18
+  });
+
+  var mapa = new L.Map("wishmap", {
+    center: new L.LatLng(51.505, -0.09), // filled according to the culture above
+    maxZoom: 18,
+    minZoom: 2,
+    worldCopyJump: true,
+    zoom: 2,
+    layers: [tile],
+    contextmenu: true,
+    contextmenuWidth: 140,
+    contextmenuItems: [{
+        text: 'Add Wish Here',
+        callback: addWishOnMap
+    }, {
+        text: 'Center map here',
+        callback: centerMap
+    }, '-', {
+        text: 'Zoom in',
+        icon: '/images/zoom-in.png',
+        callback: zoomIn
+    }, {
+        text: 'Zoom out',
+        icon: '/images/zoom-out.png',
+        callback: zoomOut
+    }]
+  });
+
+var currentPopup;
+
+    //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
+
+    /*L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
     }).addTo(mapa);
+
+  mapa.on('click', function(e) {
+      alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+  });*/
+
+  mapa.on('popupopen', function(e) {
+    currentPopup = e;
   });
+
+  function addWishOnMap(e) {
+      //$('#status_messages').html(__(''));
+      //plotVenues(e.latlng.lat, e.latlng.lng);
+      //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+  }
+
+  function centerMap(e) {
+      mapa.panTo(e.latlng);
+  }
+
+  function zoomIn(e) {
+      mapa.zoomIn();
+  }
+
+  function zoomOut(e) {
+      mapa.zoomOut();
+  }
+
+  });
+
 }
