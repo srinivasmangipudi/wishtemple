@@ -226,7 +226,13 @@ Template.createDialog.events({
         public: public
       });
 
-      L.marker([coords.x,coords.y]).addTo(mapa);
+      var myIcon = L.icon({
+        iconUrl: "/images/user.png",
+        iconSize: [25, 25]
+      });
+
+      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: description, riseOnHover: true }).bindPopup(title).addTo(mapa);
+      marker.openPopup();
 
       Session.set("selected", id);
       if (! public && Meteor.users.find().count() > 1)
