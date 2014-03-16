@@ -125,7 +125,7 @@ Template.map.events({
   }
 });
 
-Template.map.rendered = function () {
+Template.map.rendered = function () {/*
   var self = this;
   self.node = self.find("svg");
 
@@ -188,7 +188,7 @@ Template.map.rendered = function () {
       else
         callout.attr("display", 'none');
     });
-  }
+  }*/
 };
 
 Template.map.destroyed = function () {
@@ -215,6 +215,8 @@ Template.createDialog.events({
     var public = ! template.find(".private").checked;
     var coords = Session.get("createCoords");
 
+    //console.log(coords.x, coords.y);
+
     if (title.length && description.length) {
       var id = createWish({
         title: title,
@@ -223,6 +225,8 @@ Template.createDialog.events({
         y: coords.y,
         public: public
       });
+
+      L.marker([coords.x,coords.y]).addTo(mapa);
 
       Session.set("selected", id);
       if (! public && Meteor.users.find().count() > 1)
@@ -278,6 +282,9 @@ Template.inviteDialog.displayName = function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Wishmap functions
+
+  var mapa;
+
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
 
@@ -286,7 +293,7 @@ Template.inviteDialog.displayName = function () {
       maxZoom: 18
   });
 
-  var mapa = new L.Map("wishmap", {
+  mapa = new L.Map("wishmap", {
     center: new L.LatLng(51.505, -0.09), // filled according to the culture above
     maxZoom: 18,
     minZoom: 2,
