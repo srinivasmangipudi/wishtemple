@@ -334,6 +334,14 @@ var currentPopup;
       //plotVenues(e.latlng.lat, e.latlng.lng);
       //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
       console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+
+      if (!Meteor.userId()) // must be logged in to create events
+      {
+        console.log("show message to create account");
+        return;
+      }
+
+      openCreateDialog(e.latlng.lat, e.latlng.lng);
   }
 
   function centerMap(e) {
