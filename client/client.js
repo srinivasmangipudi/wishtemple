@@ -106,6 +106,7 @@ Template.attendance.canInvite = function () {
 // Map display
 
 // Use jquery to get the position clicked relative to the map element.
+/*
 var coordsRelativeToElement = function (element, event) {
   var offset = $(element).offset();
   var x = event.pageX - offset.left;
@@ -125,7 +126,7 @@ Template.map.events({
   }
 });
 
-Template.map.rendered = function () {/*
+Template.map.rendered = function () {
   var self = this;
   self.node = self.find("svg");
 
@@ -188,12 +189,12 @@ Template.map.rendered = function () {/*
       else
         callout.attr("display", 'none');
     });
-  }*/
+  }
 };
 
 Template.map.destroyed = function () {
   this.handle && this.handle.stop();
-};
+};*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // Create Wish dialog
@@ -231,7 +232,7 @@ Template.createDialog.events({
         iconSize: [25, 25]
       });
 
-      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: description, riseOnHover: true }).bindPopup(title).addTo(mapa);
+      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(title).addTo(mapa);
       marker.openPopup();
 
       Session.set("selected", id);
@@ -346,7 +347,8 @@ var currentPopup;
       //$('#status_messages').html(__(''));
       //plotVenues(e.latlng.lat, e.latlng.lng);
       //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      //console.log(Meteor.userId());
 
       if (!Meteor.userId()) // must be logged in to create events
       {
