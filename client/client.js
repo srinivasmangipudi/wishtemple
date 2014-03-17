@@ -348,7 +348,8 @@ var currentPopup;
       //plotVenues(e.latlng.lat, e.latlng.lng);
       //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
       //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      //console.log(Meteor.userId());
+      console.log(getMyWishes(Meteor.userId()));
+
 
       if (!Meteor.userId()) // must be logged in to create events
       {

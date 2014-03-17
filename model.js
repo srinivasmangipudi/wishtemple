@@ -59,6 +59,10 @@ createWish = function (options) {
   return id;
 };
 
+getMyWishes = function(userId){
+  return Wishes.find().fetch();
+};
+
 Meteor.methods({
   // options should include: title, description, x, y, public
   createWish: function (options) {
@@ -163,7 +167,11 @@ Meteor.methods({
       Wishes.update(wishId,
                      {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
     }
-  }
+  }/*,
+
+  getMyWishes: function(userId){
+    return Wishes.find().fetch();
+  }*/
 });
 
 ///////////////////////////////////////////////////////////////////////////////
