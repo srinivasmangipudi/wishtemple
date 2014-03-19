@@ -60,7 +60,7 @@ createWish = function (options) {
 };
 
 getMyWishes = function(userId){
-  return Wishes.find().fetch();
+  return Wishes.find({owner:userId}).fetch();
 };
 
 Meteor.methods({

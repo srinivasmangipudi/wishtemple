@@ -14,6 +14,11 @@ Meteor.startup(function () {
       else
         Session.set("selected", null);
     }
+
+    //db.foo.find().sort({_id:1});
+    //var last10 = Wishes.find().fetch().sort({_id:-1});
+    //console.log(last10);
+    //last10.observe(addWishMarkersOnMap(last10));
   });
 });
 
@@ -295,6 +300,10 @@ Template.inviteDialog.displayName = function () {
 // Wishmap functions
 
   var mapa;
+
+  function addWishMarkersOnMap(wishes){
+
+  }
 
   function addWishOnMap(e) {
       //$('#status_messages').html(__(''));
