@@ -167,11 +167,7 @@ Meteor.methods({
       Wishes.update(wishId,
                      {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
     }
-  }/*,
-
-  getMyWishes: function(userId){
-    return Wishes.find().fetch();
-  }*/
+  }
 });
 
 ///////////////////////////////////////////////////////////////////////////////

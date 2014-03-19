@@ -235,6 +235,10 @@ Template.createDialog.events({
       var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(title).addTo(mapa);
       marker.openPopup();
 
+      marker._leaflet_id = id;
+      console.log(marker._leaflet_id);
+
+
       Session.set("selected", id);
       if (! public && Meteor.users.find().count() > 1)
         openInviteDialog();
@@ -292,6 +296,23 @@ Template.inviteDialog.displayName = function () {
 
   var mapa;
 
+  function addWishOnMap(e) {
+      //$('#status_messages').html(__(''));
+      //plotVenues(e.latlng.lat, e.latlng.lng);
+      //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      console.log(getMyWishes(Meteor.userId()));
+
+
+      if (!Meteor.userId()) // must be logged in to create events
+      {
+        console.log("show message to create account");
+        return;
+      }
+
+      openCreateDialog(e.latlng.lat, e.latlng.lng);
+  }
+
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
 
@@ -342,23 +363,6 @@ var currentPopup;
   mapa.on('popupopen', function(e) {
     currentPopup = e;
   });
-
-  function addWishOnMap(e) {
-      //$('#status_messages').html(__(''));
-      //plotVenues(e.latlng.lat, e.latlng.lng);
-      //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      console.log(getMyWishes(Meteor.userId()));
-
-
-      if (!Meteor.userId()) // must be logged in to create events
-      {
-        console.log("show message to create account");
-        return;
-      }
-
-      openCreateDialog(e.latlng.lat, e.latlng.lng);
-  }
 
   function centerMap(e) {
       mapa.panTo(e.latlng);
