@@ -8,3 +8,11 @@ Meteor.publish("wishes", function () {
   return Wishes.find(
     {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
 });
+
+
+Meteor.publish("freshWishes", function (limit) {
+  //default limit if none set
+  var dl = limit || 10;
+
+  return Wishes.find({},[{limit:dl, sort:-1}]);
+});

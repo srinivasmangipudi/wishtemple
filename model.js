@@ -63,6 +63,10 @@ getMyWishes = function(userId){
   return Wishes.find({owner:userId}).fetch();
 };
 
+getLast10Wishes = function(){
+  return Wishes.find({},[{limit:10, sort:-1}]);
+};
+
 Meteor.methods({
   // options should include: title, description, x, y, public
   createWish: function (options) {
@@ -167,7 +171,11 @@ Meteor.methods({
       Wishes.update(wishId,
                      {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
     }
-  }
+  }/*,
+
+  freshWishes: function(limit){
+
+  }*/
 });
 
 ///////////////////////////////////////////////////////////////////////////////

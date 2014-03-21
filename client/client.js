@@ -2,10 +2,14 @@
 
 Meteor.subscribe("directory");
 Meteor.subscribe("wishes");
+//Meteor.subscribe('freshWishes', Session.get('limit'));
 
 // If no wish selected, or if the selected wish was deleted, select one.
 Meteor.startup(function () {
   Deps.autorun(function () {
+    //select amount of fresh wishes to load
+    Session.set('limit', 10);
+
     var selected = Session.get("selected");
     if (! selected || ! Wishes.findOne(selected)) {
       var wish = Wishes.findOne();
@@ -16,7 +20,10 @@ Meteor.startup(function () {
     }
 
     //db.foo.find().sort({_id:1});
-    //var last10 = Wishes.find().fetch().sort({_id:-1});
+    //var last10 = FreshWishes.find().fetch();
+
+    //console.log(Wishes.find().fetch());
+    //var last10 = getLast10Wishes();
     //console.log(last10);
     //last10.observe(addWishMarkersOnMap(last10));
   });
@@ -311,6 +318,7 @@ Template.inviteDialog.displayName = function () {
       //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
       //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
       console.log(getMyWishes(Meteor.userId()));
+      console.log(Wishes.find().fetch());
 
 
       if (!Meteor.userId()) // must be logged in to create events
