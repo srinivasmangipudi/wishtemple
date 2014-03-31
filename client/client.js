@@ -26,6 +26,7 @@ Meteor.startup(function () {
     //var last10 = getLast10Wishes();
     //console.log(last10);
     //last10.observe(addWishMarkersOnMap(last10));
+    addWishMarkersOnMap();
   });
 });
 
@@ -308,28 +309,6 @@ Template.inviteDialog.displayName = function () {
 
   var mapa;
 
-  function addWishMarkersOnMap(wishes){
-
-  }
-
-  function addWishOnMap(e) {
-      //$('#status_messages').html(__(''));
-      //plotVenues(e.latlng.lat, e.latlng.lng);
-      //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      console.log(getMyWishes(Meteor.userId()));
-      console.log(Wishes.find().fetch());
-
-
-      if (!Meteor.userId()) // must be logged in to create events
-      {
-        console.log("show message to create account");
-        return;
-      }
-
-      openCreateDialog(e.latlng.lat, e.latlng.lng);
-  }
-
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
 
@@ -338,8 +317,10 @@ Template.inviteDialog.displayName = function () {
       maxZoom: 18
   });
 
+  var m_wishes = L.featureGroup();
+
   mapa = new L.Map("wishmap", {
-    center: new L.LatLng(51.505, -0.09), // filled according to the culture above
+    center: new L.LatLng(51.505, -0.09),
     maxZoom: 18,
     minZoom: 2,
     worldCopyJump: true,
@@ -393,6 +374,46 @@ var currentPopup;
       mapa.zoomOut();
   }
 
+  function addWishOnMap(e)
+  {
+    //$('#status_messages').html(__(''));
+    //plotVenues(e.latlng.lat, e.latlng.lng);
+    //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+    //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+    //console.log(getMyWishes(Meteor.userId()));
+    //console.log(Wishes.find().fetch());
+
+
+    if (!Meteor.userId()) // must be logged in to create events
+    {
+      console.log("show message to create account");
+      return;
+    }
+
+    openCreateDialog(e.latlng.lat, e.latlng.lng);
+  }
+
   });
+}
+
+function addWishMarkersOnMap()
+{
+  var myIcon = L.icon({
+    iconUrl: "/images/user.png",
+    iconSize: [25, 25]
+  });
+
+  //mapa.spin(true);
+  wws = Wishes.find().fetch();
+  //console.log(wws);
+  for(var k=0; k<wws.length; k++)
+  {
+    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
+    marker.openPopup();
+
+    //marker._leaflet_id = id;
+    //console.log(marker._leaflet_id);
+
+  }
 
 }

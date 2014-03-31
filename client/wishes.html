@@ -41,11 +41,11 @@
           </div>
           <div class="span5">
             <div style="float: right">
-              {{loginButtons align="right"}}
+              {{> loginButtons align="right"}}
             </div>
           </div>
         </div>
-
+<!--
         <div class="row">
           <div class="span6">
             {{!> map}}
@@ -59,6 +59,7 @@
             {{> details}}
           </div>
         </div>
+      -->
       </div>
 
       <div class="span1"> </div>
@@ -86,9 +87,7 @@
 -->
 
 <template name="myWishmap">
-  {{#constant}}
     <div id="wishmap" style="height:400px;"></div>
-  {{/constant}}
 </template>
 
 <template name="details">
