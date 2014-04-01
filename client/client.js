@@ -26,7 +26,11 @@ Meteor.startup(function () {
     //var last10 = getLast10Wishes();
     //console.log(last10);
     //last10.observe(addWishMarkersOnMap(last10));
-    addWishMarkersOnMap();
+    var isDirty = Session.get("dirty");
+    console.log(isDirty);
+
+    if(isDirty)
+      addWishMarkersOnMap();
   });
 });
 
@@ -251,6 +255,7 @@ Template.createDialog.events({
       marker._leaflet_id = id;
       console.log(marker._leaflet_id);
 
+      Session.set("dirty", "true");
 
       Session.set("selected", id);
       if (! public && Meteor.users.find().count() > 1)
@@ -405,7 +410,7 @@ function addWishMarkersOnMap()
 
   //mapa.spin(true);
   wws = Wishes.find().fetch();
-  //console.log(wws);
+  console.log(wws);
   for(var k=0; k<wws.length; k++)
   {
     var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
@@ -415,5 +420,7 @@ function addWishMarkersOnMap()
     //console.log(marker._leaflet_id);
 
   }
+
+  Session.set("dirty", "false");
 
 }
