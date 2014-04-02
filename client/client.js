@@ -27,6 +27,10 @@ Meteor.startup(function () {
     //console.log(last10);
     //last10.observe(addWishMarkersOnMap(last10));
     var isDirty = Session.get("dirty");
+    if(isDirty == null)
+    {
+      Session.set("dirty", "true");
+    }
     console.log(isDirty);
 
     if(isDirty)
@@ -350,6 +354,7 @@ Template.inviteDialog.displayName = function () {
     }]
   });
 
+//mapa.on('click', onClick);
 var currentPopup;
 
     //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
@@ -363,9 +368,16 @@ var currentPopup;
       alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
   });*/
 
-  mapa.on('popupopen', function(e) {
+  /*mapa.on('popupopen', function(e) {
     currentPopup = e;
-  });
+    console.log("popopen");
+    console.log(e);
+  });*/
+
+  /*mapa.on('click', function(e) {
+    //currentPopup = e;
+    console.log("click");
+  });*/
 
   function centerMap(e) {
       mapa.panTo(e.latlng);
@@ -401,6 +413,12 @@ var currentPopup;
   });
 }
 
+function onClick(e) {
+  //console.log(e);
+  console.log("click");
+
+}
+
 function addWishMarkersOnMap()
 {
   var myIcon = L.icon({
@@ -410,15 +428,15 @@ function addWishMarkersOnMap()
 
   //mapa.spin(true);
   wws = Wishes.find().fetch();
-  console.log(wws);
+  console.log("ädding wish markers on map");
+  //console.log(wws);
   for(var k=0; k<wws.length; k++)
   {
     var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
-    marker.openPopup();
-
-    //marker._leaflet_id = id;
+    marker._leaflet_id = wws[k]._id;
     //console.log(marker._leaflet_id);
-
+    marker.on('click', onClick);
+    marker.openPopup();
   }
 
   Session.set("dirty", "false");
