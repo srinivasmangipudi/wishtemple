@@ -6,19 +6,38 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
   <script src="/js/leaflet.contextmenu.js"></script>
 
-  <title>Wish Temple</title>
+  <title>WishTemple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-  {{> page}}
 
-  {{> myWishmap}}
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: aliceblue;">
+      <div class="container">
+        <div class="navbar-header">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">WishTemple</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-  <script>
+  <div>
+    {{> page}}
+  </div>
 
+  <div>
+    {{> myWishmap}}
+  </div>
 
-  </script>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </div>
+
 </body>
 
 <template name="page">
@@ -30,14 +49,14 @@
     {{> inviteDialog}}
   {{/if}}
 
-  <div class="container">
+  <div class="container" style="display: list-item;">
     <div class="row">
       <div class="span1"> </div>
 
       <div class="span10">
         <div class="header row">
           <div class="span5">
-            <h3 style="margin-bottom: 0px">Wish Temple</h3>
+            <h3 style="margin-bottom: 0px"></h3>
           </div>
           <div class="span5">
             <div style="float: right">
