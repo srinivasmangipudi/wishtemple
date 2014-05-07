@@ -11,12 +11,27 @@ Meteor.startup(function () {
     Session.set('limit', 10);
 
     var selected = Session.get("selected");
-    if (! selected || ! Wishes.findOne(selected)) {
-      var wish = Wishes.findOne();
-      if (wish)
-        Session.set("selected", wish._id);
-      else
-        Session.set("selected", null);
+    console.log("selected="+selected);
+
+    if(typeof(selected) != 'undefined')
+    {
+      if (! selected || ! Wishes.findOne(selected))
+      {
+        var wish = Wishes.findOne();
+        if (wish)
+          Session.set("selected", wish._id);
+        else
+          Session.set("selected", null);
+
+        console.log("randomly selecting one wish:"+wish._id);
+      }
+    }
+    else
+    {
+      console.log("plotting first lot");
+
+      addWishMarkersOnMap();
+      //Session.set("dirty", "false");
     }
 
     //db.foo.find().sort({_id:1});
@@ -27,14 +42,27 @@ Meteor.startup(function () {
     //console.log(last10);
     //last10.observe(addWishMarkersOnMap(last10));
     var isDirty = Session.get("dirty");
-    if(isDirty == null)
-    {
-      Session.set("dirty", "true");
-    }
-    console.log(isDirty);
+    console.log("dirty="+isDirty);
 
-    if(isDirty)
+    if(typeof(isDirty) == 'undefined')
+    {
+      console.log("setting dirty first time!");
+      Session.set("dirty", "true");
+      isDirty = Session.get("dirty");
+    }
+
+    console.log("dirty="+isDirty);
+
+    if(isDirty == 'true')
+    {
+
       addWishMarkersOnMap();
+      //Session.set("dirty", "true");
+    }
+    else
+    {
+      console.log("not dirty!");
+    }
   });
 });
 
@@ -333,6 +361,7 @@ Template.inviteDialog.displayName = function () {
     maxZoom: 18,
     minZoom: 2,
     worldCopyJump: true,
+    scrollWheelZoom: false,
     zoom: 2,
     layers: [tile],
     contextmenu: true,
@@ -414,13 +443,14 @@ var currentPopup;
 }
 
 function onClick(e) {
-  //console.log(e);
   console.log("click");
-
+  console.log(e.target._leaflet_id);
+  Session.set("selected", e.target._leaflet_id);
 }
 
 function addWishMarkersOnMap()
 {
+
   var myIcon = L.icon({
     iconUrl: "/images/user.png",
     iconSize: [25, 25]
@@ -429,16 +459,19 @@ function addWishMarkersOnMap()
   //mapa.spin(true);
   wws = Wishes.find().fetch();
   console.log("ädding wish markers on map");
-  //console.log(wws);
+  console.log(wws);
+  var lastId;
   for(var k=0; k<wws.length; k++)
   {
     var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
     marker._leaflet_id = wws[k]._id;
-    //console.log(marker._leaflet_id);
+    lastId = wws[k]._id;
+    console.log(marker._leaflet_id);
     marker.on('click', onClick);
     marker.openPopup();
   }
 
+  Session.set("selected", lastId);
   Session.set("dirty", "false");
 
 }
