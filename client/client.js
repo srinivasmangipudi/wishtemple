@@ -349,10 +349,82 @@ Template.inviteDialog.displayName = function () {
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
 
-  var tile = L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
+  //mapa.on('click', onClick);
+  var currentPopup;
+
+    //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
+
+    /*L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+    }).addTo(mapa);
+
+  mapa.on('click', function(e) {
+      alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+  });*/
+
+  /*mapa.on('popupopen', function(e) {
+    currentPopup = e;
+    console.log("popopen");
+    console.log(e);
+  });*/
+
+  /*mapa.on('click', function(e) {
+    //currentPopup = e;
+    console.log("click");
+  });*/
+
+
+  });
+}
+
+function centerMap(e) {
+    mapa.panTo(e.latlng);
+}
+
+function zoomIn(e) {
+    mapa.zoomIn();
+}
+
+function zoomOut(e) {
+    mapa.zoomOut();
+}
+
+function onClick(e) {
+  console.log("click");
+  console.log(e.target._leaflet_id);
+  Session.set("selected", e.target._leaflet_id);
+}
+
+function addWishOnMap(e)
+{
+  //$('#status_messages').html(__(''));
+  //plotVenues(e.latlng.lat, e.latlng.lng);
+  //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+  //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+  //console.log(getMyWishes(Meteor.userId()));
+  //console.log(Wishes.find().fetch());
+
+
+  if (!Meteor.userId()) // must be logged in to create events
+  {
+    console.log("show message to create account");
+    return;
+  }
+
+  openCreateDialog(e.latlng.lat, e.latlng.lng);
+}
+
+function initMap()
+{
+  console.log("before map init");
+
+  /*var tile = L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
       maxZoom: 18
-  });
+  });*/
+
+  var tile = new L.StamenTileLayer("watercolor");
 
   var m_wishes = L.featureGroup();
 
@@ -382,75 +454,15 @@ Template.inviteDialog.displayName = function () {
         callback: zoomOut
     }]
   });
-
-//mapa.on('click', onClick);
-var currentPopup;
-
-    //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
-
-    /*L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-        maxZoom: 18
-    }).addTo(mapa);
-
-  mapa.on('click', function(e) {
-      alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
-  });*/
-
-  /*mapa.on('popupopen', function(e) {
-    currentPopup = e;
-    console.log("popopen");
-    console.log(e);
-  });*/
-
-  /*mapa.on('click', function(e) {
-    //currentPopup = e;
-    console.log("click");
-  });*/
-
-  function centerMap(e) {
-      mapa.panTo(e.latlng);
-  }
-
-  function zoomIn(e) {
-      mapa.zoomIn();
-  }
-
-  function zoomOut(e) {
-      mapa.zoomOut();
-  }
-
-  function addWishOnMap(e)
-  {
-    //$('#status_messages').html(__(''));
-    //plotVenues(e.latlng.lat, e.latlng.lng);
-    //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-    //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-    //console.log(getMyWishes(Meteor.userId()));
-    //console.log(Wishes.find().fetch());
-
-
-    if (!Meteor.userId()) // must be logged in to create events
-    {
-      console.log("show message to create account");
-      return;
-    }
-
-    openCreateDialog(e.latlng.lat, e.latlng.lng);
-  }
-
-  });
-}
-
-function onClick(e) {
-  console.log("click");
-  console.log(e.target._leaflet_id);
-  Session.set("selected", e.target._leaflet_id);
+  console.log("after map init");
 }
 
 function addWishMarkersOnMap()
 {
-
+  if(!mapa)
+  {
+    initMap();
+  }
   var myIcon = L.icon({
     iconUrl: "/images/user.png",
     iconSize: [25, 25]
