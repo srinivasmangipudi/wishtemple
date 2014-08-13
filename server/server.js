@@ -9,14 +9,20 @@ Meteor.publish("directory", function () {
     {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
 });*/
 
-Meteor.publish("wishes", function () {
+/*Meteor.publish("wishes", function () {
   return Wishes.find(
     {$or: [{"public": true}]});
+});*/
+
+Meteor.publish("wishes", function publishFunction(limit)
+{
+  var dl = limit || 10;
+  return Wishes.find({"public": true}, {sort: {date: -1}, limit: 10});
 });
 
-/*Meteor.publish("freshWishes", function (limit) {
+/*Meteor.publish("wishes", function (limit) {
   //default limit if none set
   var dl = limit || 10;
 
-  return Wishes.find({},[{limit:dl, sort:-1}]);
+  return Wishes.find({$or: [{"public": true}]},[{limit:dl, sort:-1}]);
 });*/
