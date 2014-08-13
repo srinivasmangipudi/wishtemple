@@ -345,12 +345,12 @@ Template.inviteDialog.displayName = function () {
 // Wishmap functions
 
   var mapa;
+  var currentPopup;
 
   Template.myWishmap.created = function(){
   Template.myWishmap.rendered = _.once(function(){
 
   //mapa.on('click', onClick);
-  var currentPopup;
 
     //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
 
@@ -417,13 +417,6 @@ function addWishOnMap(e)
 
 function initMap()
 {
-  console.log("before map init");
-
-  /*var tile = L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-      maxZoom: 18
-  });*/
-
   var tile = new L.StamenTileLayer("watercolor");
 
   var m_wishes = L.featureGroup();
@@ -454,7 +447,6 @@ function initMap()
         callback: zoomOut
     }]
   });
-  console.log("after map init");
 }
 
 function addWishMarkersOnMap()
