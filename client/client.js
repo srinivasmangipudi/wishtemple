@@ -391,8 +391,8 @@ function zoomOut(e) {
 }
 
 function onClick(e) {
-  console.log("click");
-  console.log(e.target._leaflet_id);
+  console.log("wish clicked");
+  //console.log(e.target._leaflet_id);
   Session.set("selected", e.target._leaflet_id);
 }
 

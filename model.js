@@ -94,6 +94,8 @@ Meteor.methods({
       y: options.y,
       title: options.title,
       description: options.description,
+      createdOn: Date(),
+      updatedOn: Date(),
       public: !! options.public,
       invited: [],
       rsvps: []
