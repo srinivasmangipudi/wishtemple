@@ -57,13 +57,15 @@
 
 <template name="wishlist">
   <table class="table table-hover">
-    {{#each wishlist}}
-      <tr>
-        <td>
-          {{title}}
-        </td>
-      </tr>
-    {{/each}}
+    <tbody>
+      {{#each wishlist}}
+        <tr class="tr_wish" id="{{_id}}">
+          <td>
+            {{title}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
   </table>
 </template>
 
