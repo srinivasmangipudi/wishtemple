@@ -15,6 +15,7 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: aliceblue;">
       <div class="container">
+
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">WishTemple</a></li>
@@ -22,9 +23,11 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
+
         <div style="float: right">
             {{> loginButtons align="right"}}
         </div>
+
       </div>
     </div>
 
@@ -43,11 +46,11 @@
     </div>
   </div>
 
-    <div id="footer">
-      <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
-      </div>
+  <div class="footer">
+    <div class="container-fluid">
+      <p class="text-muted">Place sticky footer content here.</p>
     </div>
+  </div>
 
 </body>
 
@@ -61,68 +64,55 @@
   {{/if}}
 
   <div style="display: list-item;">
+
     <div class="row">
-      <div class="span1"> </div>
+      <div class="span1">
+      </div>
 
       <div class="span7">
+
         <div class="header row">
-          <div class="span3">
+          <div class="span7">
             <h3 style="margin-bottom: 0px"></h3>
           </div>
-          <div class="span3">
-          </div>
         </div>
-<!--
+
         <div class="row">
-          <div class="span6">
-            {{!> map}}
-            {{#if currentUser}}
-            <div class="pagination-centered">
-              <em><small>Double click the map to post a wish!</small></em>
-            </div>
-            {{/if}}
-          </div>
-          <div class="span4">
+          <div class="span7">
             {{> details}}
           </div>
         </div>
-      -->
-      <div class="row">
-        <div class="span3">
-        </div>
-        <div class="span3">
-          {{> details}}
-        </div>
-      </div>
 
       </div>
 
       <div class="span1"> </div>
     </div>
+
   </div>
 </template>
 
-<!--
-<template name="map">
-  <div class="map">
-    {{#constant}}
-      <svg width="500" height="500">
-        <circle class="callout" cx=-100 cy=-100></circle>
-        <g class="circles"></g>
-        <g class="labels"></g>
-      </svg>
-    {{/constant}}
-    <div>
-      <small class="attribution muted">&copy;
-        <a href="http://www.openstreetmap.org/?lat=37.78212&lon=-122.40146&zoom=15&layers=M"
-           target="_blank">OpenStreetMap</a> contributors</small>
-    </div>
-  </div>
-</template>
--->
 
 <template name="myWishmap">
-    <div id="wishmap" style="height:400px;"></div>
+
+    <div class="row">
+      <div class="span9">
+      <!--  <button type="button" class="btn btn-success btn-lg">Make New Wish</button> -->
+        Right-Click on the map to make a New Wish
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span9" style="height:10px;">
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="span9">
+      <div id="wishmap" style="height:400px;"></div>
+    </div>
+  </div>
+
+
 </template>
 
 <template name="details">
