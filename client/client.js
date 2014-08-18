@@ -8,7 +8,7 @@ Meteor.subscribe("wishes");
 Meteor.startup(function () {
   Deps.autorun(function () {
     //select amount of fresh wishes to load
-    Session.set('limit', 10);
+    Session.set('limit', 100);
 
     var selected = Session.get("selected");
     console.log("selected="+selected);
@@ -118,6 +118,15 @@ Template.details.events({
     return false;
   }
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// WishList widget
+Template.wishlist.wishlist = function()
+{
+  var limit = Session.get("limit");
+  return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wish attendance widget

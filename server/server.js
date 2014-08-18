@@ -16,8 +16,8 @@ Meteor.publish("directory", function () {
 
 Meteor.publish("wishes", function publishFunction(limit)
 {
-  var dl = limit || 10;
-  return Wishes.find({"public": true}, {sort: {_id: 1}, limit: dl});
+  var dl = limit || 100;
+  return Wishes.find({"public": true}, {sort: {createdOn: 1}, limit: dl});
 });
 
 /*Meteor.publish("wishes", function (limit) {
