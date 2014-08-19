@@ -13,7 +13,7 @@
 
 <body>
 
-    <div class="navbar navbar-inverse navbar-static-top" style="background-color: aliceblue;">
+    <div class="navbar navbar-inverse navbar-static-top" style="background-color: #fdf102;">
       <div class="container">
 
         <div class="navbar-header">
@@ -56,17 +56,32 @@
 </body>
 
 <template name="wishlist">
-  <table class="table table-hover">
-    <tbody>
-      {{#each wishlist}}
-        <tr class="tr_wish" id="{{_id}}">
-          <td>
-            {{title}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
+  <div>
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="display: block; width: 100%;">
+          Current Wishes
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="width: 100%;">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Wishes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <table class="table table-hover">
+        <tbody>
+          {{#each wishlist}}
+            <tr class="tr_wish" id="{{_id}}">
+              <td>
+                {{title}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <template name="page">
@@ -81,8 +96,7 @@
   <div style="display: list-item;">
 
     <div class="row">
-      <div class="span1">
-      </div>
+      <div class="span1"></div>
 
       <div class="span7">
 
@@ -110,7 +124,7 @@
 <template name="myWishmap">
 
     <div class="row">
-      <div class="span9">
+      <div class="span9" style="color:#03c1fd;">
       <!--  <button type="button" class="btn btn-success btn-lg">Make New Wish</button> -->
         Right-Click on the map to make a New Wish
       </div>
@@ -156,7 +170,7 @@
 
         {{#if canRemove}}
           <div class="alert alert-info"><small>
-              You posted this wish and nobody has sent fulfillment offer, so if
+              You posted this wish and nobody has sent fulfillment offer. If
               you like, you could
               <b><a href="#" class="remove">delete this listing</a></b>.
           </small></div>

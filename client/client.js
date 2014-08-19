@@ -131,6 +131,23 @@ Template.wishlist.events({
   'click .tr_wish': function () {
     //console.log(this._id);
     Session.set("selected", this._id);
+    var currWish = Wishes.findOne(this._id);
+    mapa.panTo([currWish.x, currWish.y]);
+
+    /*var mlayers = mapa._layers;
+    //console.log(mlayers);
+
+    var panes = mapa.getPanes();
+    //console.log(panes);
+
+    var mpane = mapa.getPanes().markerPane;
+    //console.log(mpane);
+
+    for(var k=0; k<mpane.childNodes.length; k++)
+    {
+      //console.log(mpane.childNodes[k]);
+      //mpane.childNodes[k].openPopup();
+    }*/
   },
 });
 ///////////////////////////////////////////////////////////////////////////////
@@ -319,14 +336,6 @@ function onClick(e) {
 
 function addWishOnMap(e)
 {
-  //$('#status_messages').html(__(''));
-  //plotVenues(e.latlng.lat, e.latlng.lng);
-  //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-  //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-  //console.log(getMyWishes(Meteor.userId()));
-  //console.log(Wishes.find().fetch());
-
-
   if (!Meteor.userId()) // must be logged in to create events
   {
     console.log("show message to create account");
