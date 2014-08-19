@@ -1,9 +1,9 @@
 
 <head>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <link rel="stylesheet" href="/css/leaflet.contextmenu.css" />
 
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   <script src="/js/leaflet.contextmenu.js"></script>
   <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
 
@@ -59,12 +59,12 @@
   <div>
     <div>
       <div class="dropdown">
-        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="display: block; width: 100%;">
+        <button class="btn btn-info dropdown-toggle" type="button" id="currentwishes" data-toggle="dropdown" style="display: block; width: 100%;">
           Current Wishes
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="width: 100%;">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Wishes</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="mywishes">My Wishes</a></li>
         </ul>
       </div>
     </div>
@@ -123,9 +123,8 @@
 
 <template name="myWishmap">
 
-    <div class="row">
-      <div class="span9" style="color:#03c1fd;">
-      <!--  <button type="button" class="btn btn-success btn-lg">Make New Wish</button> -->
+    <div class="row" style="color:#03c1fd;">
+      <div class="span9" >
         Right-Click on the map to make a New Wish
       </div>
     </div>
@@ -137,10 +136,9 @@
 
   <div class="row">
     <div class="span9">
-      <div id="wishmap" style="height:400px;"></div>
+      <div id="wishmap"></div>
     </div>
   </div>
-
 
 </template>
 

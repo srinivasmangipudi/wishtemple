@@ -282,39 +282,8 @@ Template.inviteDialog.displayName = function () {
 ////////////////////////////////////////////////////////////////////////////////
 // Wishmap functions
 
-  var mapa;
-  var currentPopup;
-
-  Template.myWishmap.created = function(){
-  Template.myWishmap.rendered = _.once(function(){
-
-  //mapa.on('click', onClick);
-
-    //var mapa = L.map('wishmap').setView([51.505, -0.09], 13);
-
-    /*L.tileLayer('http://{s}.tile.cloudmade.com/28cc49f16f1747ebae3100fb3d32f05a/997/256/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-        maxZoom: 18
-    }).addTo(mapa);
-
-  mapa.on('click', function(e) {
-      alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
-  });*/
-
-  /*mapa.on('popupopen', function(e) {
-    currentPopup = e;
-    console.log("popopen");
-    console.log(e);
-  });*/
-
-  /*mapa.on('click', function(e) {
-    //currentPopup = e;
-    console.log("click");
-  });*/
-
-
-  });
-}
+var mapa;
+var currentPopup;
 
 function centerMap(e) {
     mapa.panTo(e.latlng);
@@ -354,10 +323,11 @@ function initMap()
   mapa = new L.Map("wishmap", {
     center: new L.LatLng(51.505, -0.09),
     maxZoom: 18,
-    minZoom: 2,
+    minZoom: 3,
     worldCopyJump: true,
-    scrollWheelZoom: false,
-    zoom: 2,
+    scrollWheelZoom: true,
+    trackResize: true,
+    zoom: 3,
     layers: [tile],
     contextmenu: true,
     contextmenuWidth: 140,
@@ -391,23 +361,26 @@ function addWishMarkersOnMap()
   });
 
   //mapa.spin(true);
-  wws = Wishes.find().fetch();
+  var wws = Wishes.find().fetch();
   console.log("ädding wish markers on map");
-  console.log(wws);
+  //console.log(wws);
   var lastId;
+  var currWish;
   for(var k=0; k<wws.length; k++)
   {
     var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
     marker._leaflet_id = wws[k]._id;
     lastId = wws[k]._id;
-    console.log(marker._leaflet_id);
+    //console.log(marker._leaflet_id);
     marker.on('click', onClick);
     marker.openPopup();
+    currWish = wws[k];
   }
 
   Session.set("selected", lastId);
   Session.set("dirty", "false");
 
+  mapa.panTo([currWish.x, currWish.y]);
 }
 
 
