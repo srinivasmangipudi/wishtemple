@@ -12,6 +12,12 @@ margin: 0 auto;
 padding: 0;
 }
 
+.wishlist-form{
+background-color: #03c1fd;
+color: #fdf102;
+width: 100%;
+}
+
 .details {
     margin-top: -18px;
 }

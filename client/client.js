@@ -34,6 +34,17 @@ Meteor.startup(function () {
       //Session.set("dirty", "false");
     }
 
+    var wliststate = Session.get("wishliststate");
+    console.log("wliststate:"+wliststate);
+    if(typeof(wliststate) == 'undefined')
+    {
+      console.log("setting current wishes as default");
+      Session.set("wishliststate", "currentwishes");
+    }
+    else
+    {
+      
+    }
     //db.foo.find().sort({_id:1});
     //var last10 = FreshWishes.find().fetch();
 
@@ -124,8 +135,15 @@ Template.details.events({
 Template.wishlist.wishlist = function()
 {
   var limit = Session.get("limit");
-  return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
-}
+  var wliststate = Session.get("wishliststate");
+
+  if(wliststate == "mywishes")
+  {
+    return Wishes.find({"public": true, owner:Meteor.userId()}, {sort: {createdOn: -1}, limit: limit});
+  }
+  else
+    return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+};
 
 Template.wishlist.events({
   'click .tr_wish': function () {
@@ -149,6 +167,26 @@ Template.wishlist.events({
       //mpane.childNodes[k].openPopup();
     }*/
   },
+
+  'click .mywishes':function(){
+    console.log('dropdown mywishes-userid:'+Meteor.userId());
+    Session.set("wishliststate", "mywishes");
+    Session.set("dirty", "true");
+
+    //var limit = Session.get("limit");
+    //return Wishes.find({"public": true, owner:Meteor.userId()}, {sort: {createdOn: -1}, limit: limit});
+  },
+
+  'click .currentwishes':function(){
+    //console.log('dropdown current');
+    Session.set("wishliststate", "currentwishes");
+    Session.set("dirty", "true");
+
+    //var limit = Session.get("limit");
+    //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+
+  },
+
 });
 ///////////////////////////////////////////////////////////////////////////////
 // Wish attendance widget
@@ -325,7 +363,7 @@ function initMap()
     maxZoom: 18,
     minZoom: 3,
     worldCopyJump: true,
-    scrollWheelZoom: true,
+    scrollWheelZoom: false,
     trackResize: true,
     zoom: 3,
     layers: [tile],
@@ -380,7 +418,7 @@ function addWishMarkersOnMap()
   Session.set("selected", lastId);
   Session.set("dirty", "false");
 
-  mapa.panTo([currWish.x, currWish.y]);
+  //mapa.panTo([currWish.x, currWish.y]);
 }
 
 
