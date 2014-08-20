@@ -31,27 +31,29 @@
       </div>
     </div>
 
-  <div class="container-fluid">
-    <div class="span9" style="float:left;">
-      <div>
-        {{> page}}
-      </div>
+  <div id="wrapper">
+    <div id="main" class="container-fluid clear-top">
+      <div class="row">
+        <div class="span9" style="float:left;">
+          <div>
+            {{> page}}
+          </div>
 
-      <div>
-        {{> myWishmap}}
-      </div>
-    </div>
+          <div> 
+            {{> myWishmap}}
+          </div>
+        </div>
 
-    <div class="span3" style="float:right;">
-      {{> wishlist}}
+        <div class="span4" style="float:right;">
+          {{> wishlist}}
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="container-fluid">
-      <p class="text-muted">Place sticky footer content here.</p>
-    </div>
-  </div>
+  <footer class="footer">
+    <p class="text-muted credit">&nbsp;&nbsp; Site by <a href="http://decisiontrees.tumblr.com">DecisionTrees CreativeLab</a></p>
+  </footer>
 
 </body>
 
@@ -94,7 +96,7 @@
     {{> inviteDialog}}
   {{/if}}
 
-  <div style="display: list-item;">
+  <div style="">
 
     <div class="row">
       <div class="span1"></div>
@@ -137,7 +139,7 @@
 
   <div class="row">
     <div class="span9">
-      <div id="wishmap"></div>
+      <div id="wishmap" class="wishmap"></div>
     </div>
   </div>
 
