@@ -189,6 +189,17 @@ displayName = function (user) {
   return user.emails[0].address;
 };
 
+displayPic = function(user){
+  if (user.services && user.services.facebook)
+  {
+    return "http://graph.facebook.com/" + user.services.facebook.id + "/picture";
+  }
+  else
+  {
+     return "/images/profile.png";
+  }
+};
+
 var contactEmail = function (user) {
   if (user.emails && user.emails.length)
     return user.emails[0].address;

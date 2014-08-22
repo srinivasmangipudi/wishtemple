@@ -95,6 +95,13 @@ Template.details.creatorName = function () {
   return displayName(owner);
 };
 
+Template.details.creatorPic = function () {
+  var user = Meteor.users.findOne(this.owner);
+  console.log(user);
+
+  return displayPic(user);
+};
+
 Template.details.canRemove = function () {
   return this.owner === Meteor.userId() && attending(this) === 0;
 };

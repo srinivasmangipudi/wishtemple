@@ -34,23 +34,24 @@
     </div>
 
   <div id="wrapper">
-    <div id="main" class="container-fluid clear-top" >
-      <div class="row" style="width=100%; display:block;">
-        <div class="span8" style="float:left; ">
-          <div>
-            {{> page}}
+      <div id="main" class="container-fluid clear-top" >
+        <div class="row" style="width=100%; display:block;">
+          <div class="span8" style="float:left; ">
+            <div>
+              {{> page}}
+            </div>
+
+            <div> 
+              {{> myWishmap}}
+            </div>
           </div>
 
-          <div> 
-            {{> myWishmap}}
+          <div class="span4" style="float:right;">
+            {{> wishlist}}
           </div>
-        </div>
-
-        <div class="span4" style="float:right;">
-          {{> wishlist}}
         </div>
       </div>
-    </div>
+
   </div>
 
   <footer class="footer">
@@ -168,7 +169,7 @@
           {{else}}
             <i>Sign in to fulfil this wish.</i>
           {{/if}}
-          <p><small>Posted by <a href="#" class="profile">{{creatorName}}</a></small></p>
+          <p><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27">{{creatorName}}</a></small></p>
         </div>
 
         {{#if canRemove}}
