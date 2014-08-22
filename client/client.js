@@ -365,6 +365,7 @@ function initMap()
     worldCopyJump: true,
     scrollWheelZoom: false,
     trackResize: true,
+    fullscreenControl: true,
     zoom: 3,
     layers: [tile],
     contextmenu: true,
