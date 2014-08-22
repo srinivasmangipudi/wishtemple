@@ -9,6 +9,12 @@
     clear:both;
     padding-top:20px;
     background-color: #fdf102;
+    border-top-color: #080808;
+    border-top: 1px;
+}
+
+.welcome {
+    background-image: url('../images/welcome_screen.png');
 }
 
 #main {

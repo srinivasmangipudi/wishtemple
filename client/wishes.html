@@ -35,8 +35,8 @@
 
   <div id="wrapper">
       <div id="main" class="container-fluid clear-top" >
-        <div class="row" style="width=100%; display:block;">
-          <div class="span8" style="float:left; ">
+        <div class="row" style="width=100%;">
+          <div class="col-md-8" style="float:left; ">
             <div>
               {{> page}}
             </div>
@@ -46,7 +46,7 @@
             </div>
           </div>
 
-          <div class="span4" style="float:right;">
+          <div class="col-md-4" style="float:right;">
             {{> wishlist}}
           </div>
         </div>
@@ -102,25 +102,25 @@
   <div style="">
 
     <div class="row">
-      <div class="span1"></div>
+      <div class="col-md-1"></div>
 
-      <div class="span7">
+      <div class="col-md-10">
 
         <div class="header row">
-          <div class="span7">
+          <div class="col-md-10">
             <h3 style="margin-bottom: 0px"></h3>
           </div>
         </div>
 
         <div class="row">
-          <div class="span7">
+          <div class="col-md-10">
             {{> details}}
           </div>
         </div>
 
       </div>
 
-      <div class="span1"> </div>
+      <div class="col-md-1"> </div>
     </div>
 
   </div>
@@ -129,19 +129,19 @@
 
 <template name="myWishmap">
 
-    <div class="row" style="color:#03c1fd;">
-      <div class="span9" >
-        Right-Click on the map to make a New Wish
-      </div>
+  <div class="row" style="color:#03c1fd;">
+    <div class="col-md-12" >
+      Right-Click on the map to make a New Wish
     </div>
-
-    <div class="row">
-      <div class="span9" style="height:10px;">
-      </div>
-    </div>
+  </div>
 
   <div class="row">
-    <div class="span9">
+    <div class="col-md-12" style="height:10px;">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
       <div id="wishmap" class="wishmap"></div>
     </div>
   </div>
@@ -252,10 +252,10 @@
         {{/if}}
 
         <label>Title</label>
-        <input type="text" class="title span5">
+        <input type="text" class="title col-md-5">
 
         <label>Description</label>
-        <textarea class="description span5"></textarea>
+        <textarea class="description col-md-5"></textarea>
 
         <label class="checkbox">
           <input type="checkbox" class="private">
