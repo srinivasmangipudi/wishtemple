@@ -32,9 +32,9 @@
     </div>
 
   <div id="wrapper">
-    <div id="main" class="container-fluid clear-top">
-      <div class="row">
-        <div class="span9" style="float:left;">
+    <div id="main" class="container-fluid clear-top" >
+      <div class="row" style="width=100%; display:block;">
+        <div class="span8" style="float:left; ">
           <div>
             {{> page}}
           </div>
@@ -166,7 +166,7 @@
           {{else}}
             <i>Sign in to fulfil this wish.</i>
           {{/if}}
-          <p><small>Posted by {{creatorName}}</small></p>
+          <p><small>Posted by <a href="#" class="profile">{{creatorName}}</a></small></p>
         </div>
 
         {{#if canRemove}}
