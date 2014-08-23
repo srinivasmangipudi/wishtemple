@@ -77,6 +77,15 @@ Meteor.startup(function () {
   });
 });
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Global Helper functions
+
+UI.registerHelper('stub', function() {
+  //code -- call {{stub}} anywhere in template
+});
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar
 
@@ -97,8 +106,6 @@ Template.details.creatorName = function () {
 
 Template.details.creatorPic = function () {
   var user = Meteor.users.findOne(this.owner);
-  console.log(user);
-
   return displayPic(user);
 };
 
@@ -176,7 +183,6 @@ Template.wishlist.events({
   },
 
   'click .mywishes':function(){
-    console.log('dropdown mywishes-userid:'+Meteor.userId());
     Session.set("wishliststate", "mywishes");
     Session.set("dirty", "true");
 
