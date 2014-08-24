@@ -92,7 +92,7 @@ UI.registerHelper('stub', function() {
 Template.details.profile = function() {
   var user = Session.get("profile");
 
-  console.log("profile:" + user);
+  //console.log("profile:" + user);
 
   if(user)
   {
@@ -120,11 +120,26 @@ Template.details.creatorName = function () {
   return displayName(owner);
 };
 
-Template.details.profileName = function () {
+Template.details.whooseProfile = function () {
   var owner = Meteor.users.findOne(Session.get("profile"));
   if (owner._id === Meteor.userId())
     return "me";
-  return displayName(owner);
+  return profileName(owner);
+};
+
+Template.details.profileName = function () {
+  var owner = Meteor.users.findOne(Session.get("profile"));
+  return profileName(owner);
+};
+
+Template.details.profileNameChanged = function() {
+  var temp = Session.get("profileNameChanged");
+
+  if(temp)
+  {
+    return "glyphicon-ok";
+  }
+  return "";
 };
 
 Template.details.creatorPic = function () {
@@ -147,6 +162,10 @@ Template.details.maybeChosen = function (what) {
   }) || {};
 
   return what == myRsvp.rsvp ? "chosen btn-inverse" : "";
+};
+
+Template.details.error = function () {
+  return Session.get("createError");
 };
 
 Template.details.events({
@@ -175,7 +194,21 @@ Template.details.events({
   },
   'click .cancel-profile': function() {
     Session.set("profile", null);
-  }
+  },
+  'blur .profile-name': function(event, template) {
+    var user = Session.get("profile");
+    var input = template.find(".profile-name").value;
+    console.log(input);
+    console.log(user);
+
+    Meteor.users.update({_id:user}, { $set: {"profile.name": input}});
+    Session.set("profileNameChanged", true);
+    return true;
+  },
+  'click .profile-name': function(event, template) {
+    Session.set("profileNameChanged", "");
+    return true;
+  },
 });
 
 ///////////////////////////////////////////////////////////////////////////////

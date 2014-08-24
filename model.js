@@ -173,11 +173,8 @@ Meteor.methods({
       Wishes.update(wishId,
                      {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
     }
-  }/*,
+  },
 
-  freshWishes: function(limit){
-
-  }*/
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -187,6 +184,12 @@ displayName = function (user) {
   if (user.profile && user.profile.name)
     return user.profile.name;
   return user.emails[0].address;
+};
+
+profileName = function (user) {
+  if (user.profile && user.profile.name)
+    return user.profile.name;
+  return "";
 };
 
 displayPic = function(user, type){

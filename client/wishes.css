@@ -52,6 +52,13 @@ width: 100%;
     text-align:center;
 }
 
+.profile-name {
+    margin: 0 auto;
+    text-align:center;
+    white-space:nowrap;
+    display: block;
+    position: relative;
+}
 .cancel-profile {
     position: absolute;
     float: right;

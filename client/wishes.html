@@ -153,12 +153,26 @@
   <div class="details">
     {{#if profile}}
       <div class="profile_header">
-        <img src={{creatorLargePic}} alt={{profileName}} class="profile-image">
+        <img src={{creatorLargePic}} alt={{whooseProfile}} class="profile-image">
         <a href="#" class="cancel-profile"><img src="/images/cancel.svg" alt="Return to details" height="20" width="20" class="cancel-profile"></a>
-        <p class="profile-title"> <h1>{{profileName}}</h1> </p>
+          <p class="profile-title"> <h1>{{whooseProfile}}</h1> </p>
       </div>
         
-      <div class="profile_details"></div>
+      <div class="form-group has-success has-feedback" style="width=100%;">
+        {{#if whooseProfile "me"}}
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+
+          <label class="sr-only" for="input-profile-name">Profile Name</label>
+          <input type="text" class="title profile-name form-control" id="input-profile-name" value={{profileName}} placeholder="Enter Profile Name">
+          
+          <span class="glyphicon {{profileNameChanged}} form-control-feedback"></span>
+        {{/if}}
+      </div>
+
+      <div class="col-md-12" style="height:50px;">
+      </div>
 
     {{else}}
       {{#if wish}}
