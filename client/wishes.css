@@ -37,6 +37,22 @@ width: 100%;
     margin-top: -18px;
 }
 
+.profile-image {
+    border: none;
+    margin: 0 auto;
+    display: block;
+}
+
+.profile-title {
+    text-align:center;
+}
+
+.cancel-profile {
+    position: absolute;
+    float: right;
+    top: 0;
+    right: 0;
+}
 .mask {
     position: fixed;
     width: 100%;

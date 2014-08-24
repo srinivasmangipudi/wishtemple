@@ -71,6 +71,7 @@
         <ul class="dropdown-menu" role="menu" aria-labelledby="currentwishes" style="width: 100%;">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="currentwishes">Current Wishes</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="mywishes">My Wishes</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="userwishes">User Wishes</a></li>
         </ul>
       </div>
     </div>
@@ -150,44 +151,56 @@
 
 <template name="details">
   <div class="details">
-    {{#if wish}}
-      {{#with wish}}
-        <p><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27"> {{creatorName}}!</a></small></p>
-        <h1>{{title}}</h1>
+    {{#if profile}}
+      <div class="profile_header">
+        <img src={{creatorLargePic}} alt={{profileName}} height="200" width="200" class="profile-image">
+        <a href="#" class="cancel-profile"><img src="/images/cancel.svg" alt="Return to details" height="20" width="20" class="cancel-profile"></a>
+        <p class="profile-title"> <h1>{{profileName}}</h1> </p>
+      </div>
+        
+      <div class="profile_details"></div>
 
-        <div class="description">{{description}}</div>
-
-        {{> attendance}}
-
-        <div class="rsvp-buttons">
-          {{#if currentUser}}
-            <input type="button" value="Fulfill Wish!"
-                   class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
-            <input type="button" value="Maybe"
-                   class="btn btn-small rsvp_maybe {{maybeChosen "maybe"}}">
-            <input type="button" value="No"
-                   class="btn btn-small rsvp_no {{maybeChosen "no"}}">
-          {{else}}
-            <i>Sign in to fulfil this wish.</i>
-          {{/if}}
-        </div>
-
-        {{#if canRemove}}
-          <div class="alert alert-info"><small>
-              You posted this wish and nobody has sent fulfillment offer. If
-              you like, you could
-              <b><a href="#" class="remove">delete this listing</a></b>.
-          </small></div>
-        {{/if}}
-      {{/with}}
     {{else}}
-      <h1 class="muted pagination-centered">
-        {{#if anyWishes}}
-          Click a wish to select it
-        {{else}}
-          Sign in and double click the map to post a wish
-        {{/if}}
-      </h1>
+      {{#if wish}}
+        {{#with wish}}
+          <p><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27"> {{creatorName}}!</a></small></p>
+          <h1>{{title}}</h1>
+
+          <div class="description">{{description}}</div>
+
+          {{> attendance}}
+
+          <div class="rsvp-buttons">
+            {{#if currentUser}}
+              <input type="button" value="Fulfill Wish!"
+                     class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
+              <input type="button" value="Maybe"
+                     class="btn btn-small rsvp_maybe {{maybeChosen "maybe"}}">
+              <input type="button" value="No"
+                     class="btn btn-small rsvp_no {{maybeChosen "no"}}">
+            {{else}}
+              <i>Sign in to fulfil this wish.</i>
+            {{/if}}
+          </div>
+
+          {{#if canRemove}}
+            <div class="alert alert-info"><small>
+                You posted this wish and nobody has sent fulfillment offer. If
+                you like, you could
+                <b><a href="#" class="remove">delete this listing</a></b>.
+            </small></div>
+          {{/if}}
+        {{/with}}
+      {{else}}
+        <h1 class="muted pagination-centered">
+          {{#if anyWishes}}
+            Click a wish to select it
+          {{else}}
+            Sign in and double click the map to post a wish
+          {{/if}}
+        </h1>
+      {{/if}}
+
     {{/if}}
   </div>
 </template>

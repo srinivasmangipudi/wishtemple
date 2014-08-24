@@ -89,6 +89,22 @@ UI.registerHelper('stub', function() {
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar
 
+Template.details.profile = function() {
+  var user = Session.get("profile");
+
+  console.log("profile:" + user);
+
+  if(user)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+};
+
+
 Template.details.wish = function () {
   return Wishes.findOne(Session.get("selected"));
 };
@@ -104,9 +120,21 @@ Template.details.creatorName = function () {
   return displayName(owner);
 };
 
+Template.details.profileName = function () {
+  var owner = Meteor.users.findOne(Session.get("profile"));
+  if (owner._id === Meteor.userId())
+    return "me";
+  return displayName(owner);
+};
+
 Template.details.creatorPic = function () {
   var user = Meteor.users.findOne(this.owner);
-  return displayPic(user);
+  return displayPic(user, "small");
+};
+
+Template.details.creatorLargePic = function () {
+  var user = Meteor.users.findOne(Session.get("profile"));
+  return displayPic(user, "large");
 };
 
 Template.details.canRemove = function () {
@@ -141,6 +169,12 @@ Template.details.events({
   'click .remove': function () {
     Wishes.remove(this._id);
     return false;
+  },
+  'click .profile': function () {
+    Session.set("profile", this.owner);
+  },
+  'click .cancel-profile': function() {
+    Session.set("profile", null);
   }
 });
 
@@ -150,13 +184,22 @@ Template.wishlist.wishlist = function()
 {
   var limit = Session.get("limit");
   var wliststate = Session.get("wishliststate");
+  var user = Session.get("profile");
 
-  if(wliststate == "mywishes")
+  if(user)
   {
-    return Wishes.find({"public": true, owner:Meteor.userId()}, {sort: {createdOn: -1}, limit: limit});
+    //console.log(user);
+    return Wishes.find({"public": true, owner:user}, {sort: {createdOn: -1}, limit: limit});
   }
   else
-    return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+  {
+    if(wliststate == "mywishes")
+    {
+      return Wishes.find({"public": true, owner:Meteor.userId()}, {sort: {createdOn: -1}, limit: limit});
+    }
+    else
+      return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+  }
 };
 
 Template.wishlist.events({

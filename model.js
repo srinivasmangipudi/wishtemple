@@ -189,10 +189,13 @@ displayName = function (user) {
   return user.emails[0].address;
 };
 
-displayPic = function(user){
+displayPic = function(user, type){
   if (user.services && user.services.facebook)
   {
-    return "http://graph.facebook.com/" + user.services.facebook.id + "/picture";
+    if(type == "small")
+      return "http://graph.facebook.com/" + user.services.facebook.id + "/picture";
+    else
+      return "http://graph.facebook.com/" + user.services.facebook.id + "/picture?&type=large";
   }
   else
   {
