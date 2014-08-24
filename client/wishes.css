@@ -38,9 +38,14 @@ width: 100%;
 }
 
 .profile-image {
-    border: none;
     margin: 0 auto;
     display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border: 1px solid #03c1fd;
 }
 
 .profile-title {
