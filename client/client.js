@@ -85,7 +85,6 @@ UI.registerHelper('stub', function() {
   //code -- call {{stub}} anywhere in template
 });
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar
 
@@ -125,6 +124,13 @@ Template.details.whooseProfile = function () {
   if (owner._id === Meteor.userId())
     return "me";
   return profileName(owner);
+};
+
+Template.details.isMyProfile = function () {
+  var owner = Meteor.users.findOne(Session.get("profile"));
+  if (owner._id === Meteor.userId())
+    return true;
+  return false;
 };
 
 Template.details.profileName = function () {
