@@ -481,6 +481,23 @@ function initMap()
         callback: zoomOut
     }]
   });
+
+  var geoCoderOptions = {
+    collapsed: true, /* Whether its collapsed or not */
+    position: 'topright', /* The position of the control */
+    text: 'Locate', /* The text of the submit button */
+    bounds: null, /* a L.LatLngBounds object to limit the results to */
+    email: null, /* an email string with a contact to provide to Nominatim. Useful if you are doing lots of queries */
+    callback: function (results) {
+            var bbox = results[0].boundingbox,
+                first = new L.LatLng(bbox[0], bbox[2]),
+                second = new L.LatLng(bbox[1], bbox[3]),
+                bounds = new L.LatLngBounds([first, second]);
+            this._map.fitBounds(bounds);
+    }
+  };
+  var osmGeocoder = new L.Control.OSMGeocoder(geoCoderOptions);
+  mapa.addControl(osmGeocoder);
 }
 
 function addWishMarkersOnMap()
