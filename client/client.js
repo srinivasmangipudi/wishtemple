@@ -74,6 +74,16 @@ Meteor.startup(function () {
     {
       console.log("not dirty!");
     }
+
+
+    if(Session.get("showCreateDialog"))
+    {
+      $('#myModal').modal('show'); 
+    }
+    else
+    {
+      $('#myModal').modal('hide');  
+    }
   });
 });
 
@@ -83,6 +93,8 @@ Meteor.startup(function () {
 
 UI.registerHelper('stub', function() {
   //code -- call {{stub}} anywhere in template
+  console.log("in stub");
+
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -323,6 +335,7 @@ var openCreateDialog = function (x, y) {
   Session.set("createCoords", {x: x, y: y});
   Session.set("createError", null);
   Session.set("showCreateDialog", true);
+  //console.log("x:" + x +" y:" + y);
 };
 
 Template.page.showCreateDialog = function () {
@@ -369,16 +382,57 @@ Template.createDialog.events({
                   "It needs a title and a description, or why bother?");
     }
   },
-
   'click .cancel': function () {
     Session.set("showCreateDialog", false);
-  }
+  },
+
+  'keyup': function(e) {
+    console.log('keypress');
+    if(e.which == 27)
+    {
+      Session.set("showCreateDialog", false);
+      console.log('set false');
+    }
+      
+  },
+
 });
 
 Template.createDialog.error = function () {
   return Session.get("createError");
 };
 
+/*
+Template.createDialog.rendered = function() {
+  console.log("teamplate created");
+
+  this.autorun(function(){
+    $('#myModal').modal({
+      keyboard: false,
+      backdrop: true,
+      show: true
+    });    
+  });
+};
+*/
+
+/*Template.createDialog.rendered = function() {
+  console.log("teamplate created");
+
+  $('.myModal').modal({
+      keyboard: false,
+      backdrop: true,
+      show: true
+    });    
+
+  /*this.autorun(function(){
+    $('.myModal').modal({
+      keyboard: false,
+      backdrop: true,
+      show: true
+    });    
+  });
+};*/
 ///////////////////////////////////////////////////////////////////////////////
 // Invite dialog
 
@@ -444,6 +498,7 @@ function addWishOnMap(e)
     return;
   }
 
+  console.log("calling create dialog");
   openCreateDialog(e.latlng.lat, e.latlng.lng);
 }
 

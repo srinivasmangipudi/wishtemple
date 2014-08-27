@@ -42,7 +42,7 @@
   <div id="wrapper">
       <div id="main" class="container-fluid clear-top" >
         <div class="row" style="width=100%;">
-          <div class="col-md-8" style="float:left; ">
+          <div class="col-md-8" style="float:left;">
             <div>
               {{> page}}
             </div>
@@ -99,9 +99,7 @@
 </template>
 
 <template name="page">
-  {{#if showCreateDialog}}
     {{> createDialog}}
-  {{/if}}
 
   {{#if showInviteDialog}}
     {{> inviteDialog}}
@@ -273,35 +271,43 @@
 </template>
 
 <template name="createDialog">
-  <div class="mask"> </div>
-    <div class="modal">
-      <div class="modal-header">
-        <button type="button" class="close cancel">&times;</button>
-        <h3>Add wish</h3>
-      </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
 
-      <div class="modal-body">
-        {{#if error}}
-          <div class="alert alert-error">{{error}}</div>
-        {{/if}}
+      <div class="modal-content show">
+        <div class="modal-header">
+          <button type="button" class="close cancel" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add Wish</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group" style="width=100%;">
+              {{#if error}}
+                <div class="alert alert-error">{{error}}</div>
+              {{/if}}
 
-        <label>Title</label>
-        <input type="text" class="title col-md-5">
+              <label class="sr-only" for="addwish">Title</label>
+              <input type="text" class="title form-control" id="addwish" placeholder="Enter Wish">
 
-        <label>Description</label>
-        <textarea class="description col-md-5"></textarea>
+              <label class="sr-only" for="adddesc">Title</label>
+              <textarea class="description form-control" id="adddesc" placeholder="Enter description..."></textarea>
 
-        <label class="checkbox">
-          <input type="checkbox" class="private">
-          Private wish &mdash; invitees only
-        </label>
-      </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="private"> Private wish &mdash; invitees only
+                </label>
+              </div>                      
+            </div>
+          </form>
+        </div>
 
-      <div class="modal-footer">
-        <a href="#" class="btn cancel">Cancel</a>
-        <a href="#" class="btn btn-primary save">Add wish</a>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary save">Add Wish</button>
+        </div>
       </div>
     </div>
+  </div>
 </template>
 
 <template name="inviteDialog">
