@@ -246,6 +246,14 @@ Template.wishlist.wishlist = function()
   }
 };
 
+Template.wishlist.templatename = function()
+{
+  if(!Session.get("wishliststate"))
+    Session.set("wishliststate", "All Wishes");
+
+  return Session.get("wishliststate");
+};
+
 Template.wishlist.events({
   'click .tr_wish': function () {
     //console.log(this._id);
@@ -270,7 +278,7 @@ Template.wishlist.events({
   },
 
   'click .mywishes':function(){
-    Session.set("wishliststate", "mywishes");
+    Session.set("wishliststate", "My Wishes");
     Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
@@ -279,7 +287,17 @@ Template.wishlist.events({
 
   'click .currentwishes':function(){
     //console.log('dropdown current');
-    Session.set("wishliststate", "currentwishes");
+    Session.set("wishliststate", "All Wishes");
+    Session.set("dirty", "true");
+
+    //var limit = Session.get("limit");
+    //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+
+  },
+
+  'click .userwishes':function(){
+    //console.log('dropdown current');
+    Session.set("wishliststate", "User Wishes");
     Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
