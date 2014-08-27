@@ -7,11 +7,22 @@ Meteor.subscribe("wishes");
 // If no wish selected, or if the selected wish was deleted, select one.
 Meteor.startup(function () {
   Deps.autorun(function () {
+
+    if(Session.get("showCreateDialog"))
+      { $('#myModal').modal('show'); }
+    else
+      { $('#myModal').modal('hide'); }
+
+    if(Session.get("showInviteDialog"))
+      { $('#inviteModal').modal('show'); }
+    else
+      { $('#inviteModal').modal('hide'); }
+
     //select amount of fresh wishes to load
     Session.set('limit', 100);
 
     var selected = Session.get("selected");
-    console.log("selected="+selected);
+    console.log("In Deps selected="+selected);
 
     if(typeof(selected) != 'undefined')
     {
@@ -45,13 +56,7 @@ Meteor.startup(function () {
     {
       
     }
-    //db.foo.find().sort({_id:1});
-    //var last10 = FreshWishes.find().fetch();
 
-    //console.log(Wishes.find().fetch());
-    //var last10 = getLast10Wishes();
-    //console.log(last10);
-    //last10.observe(addWishMarkersOnMap(last10));
     var isDirty = Session.get("dirty");
     console.log("dirty="+isDirty);
 
@@ -71,19 +76,7 @@ Meteor.startup(function () {
       //Session.set("dirty", "true");
     }
     else
-    {
-      console.log("not dirty!");
-    }
-
-
-    if(Session.get("showCreateDialog"))
-    {
-      $('#myModal').modal('show'); 
-    }
-    else
-    {
-      $('#myModal').modal('hide');  
-    }
+      { console.log("not dirty!"); }
   });
 });
 
@@ -369,14 +362,16 @@ Template.createDialog.events({
       marker.openPopup();
 
       marker._leaflet_id = id;
-      console.log(marker._leaflet_id);
+      console.log("setting marker_id:" + marker._leaflet_id);
 
-      Session.set("dirty", "true");
+      Session.set("toInvite", id);
 
-      Session.set("selected", id);
-      if (! public && Meteor.users.find().count() > 1)
+      if(! public && Meteor.users.find().count() > 1)
+      {
         openInviteDialog();
+      }
       Session.set("showCreateDialog", false);
+      Session.set("dirty", "true");
     } else {
       Session.set("createError",
                   "It needs a title and a description, or why bother?");
@@ -402,37 +397,7 @@ Template.createDialog.error = function () {
   return Session.get("createError");
 };
 
-/*
-Template.createDialog.rendered = function() {
-  console.log("teamplate created");
 
-  this.autorun(function(){
-    $('#myModal').modal({
-      keyboard: false,
-      backdrop: true,
-      show: true
-    });    
-  });
-};
-*/
-
-/*Template.createDialog.rendered = function() {
-  console.log("teamplate created");
-
-  $('.myModal').modal({
-      keyboard: false,
-      backdrop: true,
-      show: true
-    });    
-
-  /*this.autorun(function(){
-    $('.myModal').modal({
-      keyboard: false,
-      backdrop: true,
-      show: true
-    });    
-  });
-};*/
 ///////////////////////////////////////////////////////////////////////////////
 // Invite dialog
 
@@ -446,7 +411,10 @@ Template.page.showInviteDialog = function () {
 
 Template.inviteDialog.events({
   'click .invite': function (event, template) {
-    Meteor.call('invite', Session.get("selected"), this._id);
+    console.log("selected:" + Session.get("toInvite"));
+    console.log("this_id:" + this._id);
+    
+    Meteor.call('invite', Session.get("toInvite"), this._id);
   },
   'click .done': function (event, template) {
     Session.set("showInviteDialog", false);
@@ -573,7 +541,7 @@ function initMap()
       iconLoading: 'icon-spinner  animate-spin',  // class for loading icon
       circlePadding: [0, 0], // padding around accuracy circle, value is passed to setBounds
       metric: true,  // use metric or imperial units
-      onLocationError: function(err) {alert(err.message)},  // define an error callback function
+      onLocationError: function(err) {alert(err.message);},  // define an error callback function
       onLocationOutsideMapBounds:  function(context) { // called when outside map boundaries
               alert(context.options.strings.outsideMapBoundsMsg);
       },

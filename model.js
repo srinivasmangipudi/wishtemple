@@ -107,6 +107,8 @@ Meteor.methods({
     check(wishId, String);
     check(userId, String);
     var wish = Wishes.findOne(wishId);
+    console.log("private wish:" + wish);
+    console.log(wish);
     if (! wish || wish.owner !== this.userId)
       throw new Meteor.Error(404, "No such wish");
     if (wish.public)

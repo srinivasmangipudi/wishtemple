@@ -61,8 +61,8 @@
   </div>
 
   <footer class="footer">
-    <p style="text-align: center; vertical-align: middle;" class="text-muted credit">&nbsp;&nbsp; <a href="https://github.com/srinivasmangipudi/wishtemple">Code on Github</a></p>
-    <p style="text-align: center; vertical-align: middle;" class="text-muted credit">&nbsp;&nbsp; Site by <a href="http://decisiontrees.tumblr.com">DecisionTrees CreativeLab</a></p>
+    <p style="text-align: center; vertical-align: middle;" class="text-muted credit">&nbsp;&nbsp; <a href="https://github.com/srinivasmangipudi/wishtemple">Github</a></p>
+    <p style="text-align: center; vertical-align: middle;" class="text-muted credit">&nbsp;&nbsp; Site by <a href="http://decisiontrees.tumblr.com">DecisionTreeCreativeLab</a></p>
   </footer>
 
 </body>
@@ -99,11 +99,9 @@
 </template>
 
 <template name="page">
-    {{> createDialog}}
+  {{> createDialog}}
 
-  {{#if showInviteDialog}}
-    {{> inviteDialog}}
-  {{/if}}
+  {{> inviteDialog}}
 
   <div style="">
 
@@ -311,26 +309,34 @@
 </template>
 
 <template name="inviteDialog">
-  <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header">
-      <button type="button" class="close done">&times;</button>
-      <h3>Invite people</h3>
-    </div>
+  <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="inviteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
 
-    <div class="modal-body">
-      {{#each uninvited}}
-        <div class="invite-row">
-          <a href="#" class="btn invite">Invite</a>
-          {{displayName}}
+      <div class="modal-content show">
+        <div class="modal-header">
+          <button type="button" class="close cancel" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="inviteModalLabel">Send wish to people</h4>
         </div>
-      {{else}}
-        Everyone on the site has already been invited.
-      {{/each}}
-    </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group" style="width=100%;">
+              {{#each uninvited}}
+                <div class="invite-row">
+                  <a href="#" class="btn invite">Invite</a>
+                  {{displayName}}
+                </div>
+              {{else}}
+                Everyone on the site has already been invited.
+              {{/each}}
+            </div>
+          </form>
+        </div>
 
-    <div class="modal-footer">
-      <a href="#" class="btn btn-primary done">Done</a>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-primary done">Done</a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
