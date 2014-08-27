@@ -24,7 +24,7 @@
 
 <body>
 
-    <div class="navbar navbar-inverse navbar-static-top" style="background-color: #fdf102;">
+    <div class="navbar navbar-inverse navbar-static-top" style="background-color: #fdf102; margin:0;">
       <div class="container">
 
         <div class="navbar-header">
@@ -72,7 +72,7 @@
 </body>
 
 <template name="wishlist">
-  <div>
+  <div style="">
     <div>
       <div class="dropdown">
         <button class="btn btn-info wishlist-form dropdown-toggle" type="button" id="" data-toggle="dropdown" style="display: block; width: 100%;">
@@ -205,11 +205,10 @@
           </div>
 
           {{#if canRemove}}
-            <div class="alert alert-info"><small>
-                You posted this wish and nobody has sent fulfillment offer. If
-                you like, you could
-                <b><a href="#" class="remove">delete this listing</a></b>.
-            </small></div>
+            <div class="alert alert-info" ><p style="text-align:center;"><small>
+                You posted this wish and nobody has sent fulfillment offer.
+                <b><a href="#" class="remove">Delete this Wish</a></b>.
+            </small></p></div>
           {{/if}}
         {{/with}}
       {{else}}
