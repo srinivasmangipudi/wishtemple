@@ -387,7 +387,7 @@ Template.createDialog.events({
   },
 
   'keyup': function(e) {
-    console.log('keypress');
+    //console.log('keypress');
     if(e.which == 27)
     {
       Session.set("showCreateDialog", false);
