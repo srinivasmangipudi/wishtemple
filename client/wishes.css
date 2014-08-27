@@ -5,7 +5,7 @@
 .footer {
     position: relative;
     margin-top: -150px; /* negative value of footer height */
-    height: 150px;
+    height: 200px;
     clear:both;
     padding-top:20px;
     background-color: #fdf102;
