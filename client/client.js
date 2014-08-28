@@ -89,10 +89,22 @@ Meteor.startup(function () {
 ///////////////////////////////////////////////////////////////////////////////
 // Global Helper functions
 
-UI.registerHelper('stub', function() {
+UI.registerHelper('wlDisplayName', function(user_id) {
   //code -- call {{stub}} anywhere in template
-  console.log("in stub");
+  //console.log("in stub name:" + user_id);
+  var user = Meteor.users.findOne(user_id);
 
+  if (user._id === Meteor.userId())
+    return "me";
+  return displayName(user);
+});
+
+UI.registerHelper('wlDisplayPic', function(user_id) {
+  //code -- call {{stub}} anywhere in template
+  //console.log("in stub pic:" + user_id);
+  var user = Meteor.users.findOne(user_id);
+
+  return displayPic(user, "small");
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -234,7 +246,7 @@ Template.wishlist.wishlist = function()
   var limit = Session.get("limit");
   var wliststate = Session.get("wishliststate");
   var user = Session.get("profile");
-  //console.log("wishlist:" + user);
+  console.log("wishlist:" + user);
   //console.log("wishliststate:" + wliststate);
 
   /*if(user)
@@ -261,7 +273,7 @@ Template.wishlist.wishlist = function()
     if(wliststate == "My Wishes")
     {
       return Wishes.find(
-              {$or: [{"public": true}, {invited: Meteor.userId()}, {owner: Meteor.userId()}]}, {sort: {createdOn: 1}, limit: limit});
+              {$or: [{invited: Meteor.userId()}, {owner: Meteor.userId()}]}, {sort: {createdOn: 1}, limit: limit});
     }
     else
     {

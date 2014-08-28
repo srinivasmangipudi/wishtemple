@@ -91,7 +91,10 @@
         <tbody>
           {{#each wishlist}}
             <tr class="tr_wish" id="{{_id}}">
-              <td>
+              <td >
+                <img src={{wlDisplayPic owner}} alt={{wlDisplayName owner}} height="30px;" width="30px;">
+              </td>
+              <td style="">
                 {{title}}
               </td>
             </tr>
