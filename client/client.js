@@ -8,6 +8,9 @@ Meteor.subscribe("wishes");
 Meteor.startup(function () {
   Deps.autorun(function () {
 
+    if(!Session.get("wishliststate"))
+      Session.set("wishliststate", "All Wishes");
+
     if(Session.get("showCreateDialog"))
       { $('#myModal').modal('show'); }
     else
@@ -46,10 +49,10 @@ Meteor.startup(function () {
     }
 
     var wliststate = Session.get("wishliststate");
-    console.log("wliststate:"+wliststate);
+    //console.log("wliststate:"+wliststate);
     if(typeof(wliststate) == 'undefined')
     {
-      console.log("setting current wishes as default");
+      //console.log("setting current wishes as default");
       Session.set("wishliststate", "currentwishes");
     }
     else
@@ -58,16 +61,16 @@ Meteor.startup(function () {
     }
 
     var isDirty = Session.get("dirty");
-    console.log("dirty="+isDirty);
+    //console.log("dirty="+isDirty);
 
     if(typeof(isDirty) == 'undefined')
     {
-      console.log("setting dirty first time!");
+      //console.log("setting dirty first time!");
       Session.set("dirty", "true");
       isDirty = Session.get("dirty");
     }
 
-    console.log("dirty="+isDirty);
+    //console.log("dirty="+isDirty);
 
     if(isDirty == 'true')
     {
@@ -76,7 +79,9 @@ Meteor.startup(function () {
       //Session.set("dirty", "true");
     }
     else
-      { console.log("not dirty!"); }
+    {
+      //console.log("not dirty!"); 
+    }
   });
 });
 
@@ -209,8 +214,8 @@ Template.details.events({
   'blur .profile-name': function(event, template) {
     var user = Session.get("profile");
     var input = template.find(".profile-name").value;
-    console.log(input);
-    console.log(user);
+    //console.log(input);
+    //console.log(user);
 
     Meteor.users.update({_id:user}, { $set: {"profile.name": input}});
     Session.set("profileNameChanged", true);
@@ -229,8 +234,10 @@ Template.wishlist.wishlist = function()
   var limit = Session.get("limit");
   var wliststate = Session.get("wishliststate");
   var user = Session.get("profile");
+  //console.log("wishlist:" + user);
+  //console.log("wishliststate:" + wliststate);
 
-  if(user)
+  /*if(user)
   {
     //console.log(user);
     return Wishes.find({"public": true, owner:user}, {sort: {createdOn: -1}, limit: limit});
@@ -243,14 +250,30 @@ Template.wishlist.wishlist = function()
     }
     else
       return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+  }*/
+
+  if(user)
+  {
+      return Wishes.find({"public": true, owner:user}, {sort: {createdOn: -1}, limit: limit});
+  }
+  else
+  {
+    if(wliststate == "My Wishes")
+    {
+      return Wishes.find(
+              {$or: [{"public": true}, {invited: Meteor.userId()}, {owner: Meteor.userId()}]}, {sort: {createdOn: 1}, limit: limit});
+    }
+    else
+    {
+      // All Wishes
+      return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+    }
+    
   }
 };
 
 Template.wishlist.templatename = function()
 {
-  if(!Session.get("wishliststate"))
-    Session.set("wishliststate", "All Wishes");
-
   return Session.get("wishliststate");
 };
 
@@ -380,7 +403,7 @@ Template.createDialog.events({
       marker.openPopup();
 
       marker._leaflet_id = id;
-      console.log("setting marker_id:" + marker._leaflet_id);
+      //console.log("setting marker_id:" + marker._leaflet_id);
 
       Session.set("toInvite", id);
 
@@ -404,7 +427,7 @@ Template.createDialog.events({
     if(e.which == 27)
     {
       Session.set("showCreateDialog", false);
-      console.log('set false');
+      //console.log('set false');
     }
       
   },
@@ -429,8 +452,8 @@ Template.page.showInviteDialog = function () {
 
 Template.inviteDialog.events({
   'click .invite': function (event, template) {
-    console.log("selected:" + Session.get("toInvite"));
-    console.log("this_id:" + this._id);
+    //console.log("selected:" + Session.get("toInvite"));
+    //console.log("this_id:" + this._id);
     
     Meteor.call('invite', Session.get("toInvite"), this._id);
   },
@@ -471,7 +494,7 @@ function zoomOut(e) {
 }
 
 function onClick(e) {
-  console.log("wish clicked");
+  //console.log("wish clicked");
   //console.log(e.target._leaflet_id);
   Session.set("selected", e.target._leaflet_id);
 }
@@ -484,7 +507,7 @@ function addWishOnMap(e)
     return;
   }
 
-  console.log("calling create dialog");
+  //console.log("calling create dialog");
   openCreateDialog(e.latlng.lat, e.latlng.lng);
 }
 
