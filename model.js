@@ -86,6 +86,7 @@ Meteor.methods({
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in");
 
+    var isAnon = false;
     var id = options._id || Random.id();
     Wishes.insert({
       _id: id,
@@ -94,6 +95,7 @@ Meteor.methods({
       y: options.y,
       title: options.title,
       description: options.description,
+      anonymous: isAnon,
       createdOn: Date(),
       updatedOn: Date(),
       public: !! options.public,

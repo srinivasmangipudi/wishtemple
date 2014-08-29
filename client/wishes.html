@@ -75,7 +75,7 @@
   <div style="">
     <div>
       <div class="dropdown">
-        <button class="btn btn-info wishlist-form dropdown-toggle" type="button" id="" data-toggle="dropdown" style="display: block; width: 100%;">
+        <button class="btn wishlist-form dropdown-toggle" type="button" id="" data-toggle="dropdown" style="display: block; width: 100%;">
           {{templatename}}
           <span class="caret"></span>
         </button>
@@ -140,8 +140,8 @@
 
 <template name="myWishmap">
 
-  <div class="row" style="color:#03c1fd;">
-    <div class="col-md-12" >
+  <div class="row" style="">
+    <div class="muted col-md-12" style="color: lightgrey;">
       Right-Click on the map to make a New Wish
     </div>
   </div>
@@ -187,7 +187,7 @@
     {{else}}
       {{#if wish}}
         {{#with wish}}
-          <p><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27"> {{creatorName}}!</a></small></p>
+          <p style="color: lightgrey;"><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27"> {{creatorName}}!</a></small></p>
           <h1>{{title}}</h1>
 
           <div class="description">{{description}}</div>
@@ -197,11 +197,11 @@
           <div class="rsvp-buttons">
             {{#if currentUser}}
               <input type="button" value="Fulfill Wish!"
-                     class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
+                     class="btn btn-success btn-small rsvp_yes {{maybeChosen "yes"}}">
               <input type="button" value="Maybe"
-                     class="btn btn-small rsvp_maybe {{maybeChosen "maybe"}}">
+                     class="btn btn-info btn-small rsvp_maybe {{maybeChosen "maybe"}}">
               <input type="button" value="No"
-                     class="btn btn-small rsvp_no {{maybeChosen "no"}}">
+                     class="btn btn-default btn-small rsvp_no {{maybeChosen "no"}}">
             {{else}}
               <i>Sign in to fulfil this wish.</i>
             {{/if}}
@@ -219,7 +219,7 @@
           {{#if anyWishes}}
             Click a wish to select it
           {{else}}
-            Sign in and double click the map to post a wish
+            Sign in and right click on the map to post a wish!
           {{/if}}
         </h1>
       {{/if}}
@@ -230,11 +230,11 @@
 
 <template name="attendance">
   <div class="attendance well well-small">
-    <div class="muted who"><b>Who</b></div>
+    <div class="muted who"><span class="label" style="color: #03c1fd;"><b>Shared with</b></span></div>
     {{#if public}}
       <div>
         <b>Everyone</b>
-        <span class="label label-inverse pull-right">Invited</span>
+        <span class="label label-inverse pull-right" style="background-color: #fdf102;">Fulfil ?</span>
       </div>
     {{/if}}
 
@@ -242,7 +242,7 @@
       <div>
         {{rsvpName}}
         {{#if rsvpIs "yes"}}
-          <span class="label label-success pull-right">Going</span>
+          <span class="label label-success pull-right">Yes</span>
         {{/if}}
         {{#if rsvpIs "maybe"}}
           <span class="label label-info pull-right">Maybe</span>
@@ -257,7 +257,7 @@
       {{#each outstandingInvitations}}
         <div>
           {{invitationName}}
-          <span class="label label-inverse pull-right">Invited</span>
+          <span class="label label-inverse pull-right" style="background-color: #fdf102;">Fulfil ?</span>
         </div>
       {{/each}}
     {{/unless}}
@@ -268,7 +268,7 @@
 
     {{#if canInvite}}
       <div class="invite">
-        <a href="#" class="btn btn-mini invite">Invite people</a>
+        <a href="#" class="btn btn-mini invite">Share wish with people</a>
       </div>
     {{/if}}
   </div>
