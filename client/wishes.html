@@ -92,7 +92,7 @@
           {{#each wishlist}}
             <tr class="tr_wish" id="{{_id}}">
               <td >
-                <img src={{wlDisplayPic owner}} alt={{wlDisplayName owner}} height="30px;" width="30px;">
+                <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="30px;" width="30px;">
               </td>
               <td style="">
                 {{title}}
@@ -301,6 +301,13 @@
                   <input type="checkbox" class="private"> Private wish &mdash; invitees only
                 </label>
               </div>                      
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="anonymous"> Secret wish &mdash; Post Anonymously
+                </label>
+              </div>                      
+
             </div>
           </form>
         </div>

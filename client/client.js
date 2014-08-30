@@ -107,6 +107,30 @@ UI.registerHelper('wlDisplayPic', function(user_id) {
   return displayPic(user, "small");
 });
 
+UI.registerHelper('wlDisplayNameForWish', function(wish_id) {
+  //code -- call {{stub}} anywhere in template
+  console.log("in stub name:" + wish_id);
+  var wish = Wishes.findOne(wish_id);
+  if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
+    return "Anonymous";
+
+  var user = Meteor.users.findOne(wish.owner);
+  if (user._id === Meteor.userId())
+    return "me";
+  return displayName(user);
+});
+
+UI.registerHelper('wlDisplayPicForWish', function(wish_id) {
+  //code -- call {{stub}} anywhere in template
+  console.log("in stub pic:" + wish_id);
+  var wish = Wishes.findOne(wish_id);
+  if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
+    return displayPic("anonymous", "small");
+
+  var user = Meteor.users.findOne(wish.owner);
+  return displayPic(user, "small");
+});
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar
 
@@ -393,9 +417,10 @@ Template.createDialog.events({
     var title = template.find(".title").value;
     var description = template.find(".description").value;
     var public = ! template.find(".private").checked;
+    var anonymous = template.find(".anonymous").checked;
     var coords = Session.get("createCoords");
 
-    //console.log(coords.x, coords.y);
+    console.log("anon:" + anonymous);
 
     if (title.length && description.length) {
       var id = createWish({
@@ -403,7 +428,8 @@ Template.createDialog.events({
         description: description,
         x: coords.x,
         y: coords.y,
-        public: public
+        public: public,
+        anonymous: anonymous
       });
 
       var myIcon = L.icon({

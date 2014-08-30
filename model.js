@@ -76,6 +76,7 @@ Meteor.methods({
       x: Coordinate,
       y: Coordinate,
       public: Match.Optional(Boolean),
+      anonymous: Match.Optional(Boolean),
       _id: Match.Optional(NonEmptyString)
     });
 
@@ -86,7 +87,7 @@ Meteor.methods({
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in");
 
-    var isAnon = false;
+    //var isAnon = false;
     var id = options._id || Random.id();
     Wishes.insert({
       _id: id,
@@ -95,7 +96,7 @@ Meteor.methods({
       y: options.y,
       title: options.title,
       description: options.description,
-      anonymous: isAnon,
+      anonymous: !! options.anonymous,
       createdOn: Date(),
       updatedOn: Date(),
       public: !! options.public,
@@ -130,7 +131,7 @@ Meteor.methods({
           replyTo: from || undefined,
           subject: "WISH: " + wish.title,
           text:
-"Hey, I just invited you to '" + wish.title + "' on All Tomorrow's Wishes." +
+"Hey, I just invited you to my wish '" + wish.title + "' on WishTemple." +
 "\n\nCome check it out: " + Meteor.absoluteUrl() + "\n"
         });
       }
@@ -197,7 +198,11 @@ profileName = function (user) {
 };
 
 displayPic = function(user, type){
-  if (user.services && user.services.facebook)
+  if(user == "anonymous")
+  {
+     return "/images/profile_anon.png";    
+  }
+  else if (user.services && user.services.facebook)
   {
     if(type == "small")
       return "http://graph.facebook.com/" + user.services.facebook.id + "/picture";
