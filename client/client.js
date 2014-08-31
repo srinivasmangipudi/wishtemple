@@ -109,7 +109,7 @@ UI.registerHelper('wlDisplayPic', function(user_id) {
 
 UI.registerHelper('wlDisplayNameForWish', function(wish_id) {
   //code -- call {{stub}} anywhere in template
-  console.log("in stub name:" + wish_id);
+  //console.log("in stub name:" + wish_id);
   var wish = Wishes.findOne(wish_id);
   if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
     return "Anonymous";
@@ -122,7 +122,7 @@ UI.registerHelper('wlDisplayNameForWish', function(wish_id) {
 
 UI.registerHelper('wlDisplayPicForWish', function(wish_id) {
   //code -- call {{stub}} anywhere in template
-  console.log("in stub pic:" + wish_id);
+  //console.log("in stub pic:" + wish_id);
   var wish = Wishes.findOne(wish_id);
   if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
     return displayPic("anonymous", "small");
@@ -152,6 +152,14 @@ Template.details.profile = function() {
 
 Template.details.wish = function () {
   return Wishes.findOne(Session.get("selected"));
+};
+
+Template.details.isAnonymous = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
+    return true;
+  else
+    return false;
 };
 
 Template.details.anyWishes = function () {
@@ -290,7 +298,7 @@ Template.wishlist.wishlist = function()
 
   if(user)
   {
-      return Wishes.find({"public": true, owner:user}, {sort: {createdOn: -1}, limit: limit});
+      return Wishes.find({"public": true, owner:user, anonymous:false}, {sort: {createdOn: -1}, limit: limit});
   }
   else
   {
@@ -298,6 +306,10 @@ Template.wishlist.wishlist = function()
     {
       return Wishes.find(
               {$or: [{invited: Meteor.userId()}, {owner: Meteor.userId()}]}, {sort: {createdOn: 1}, limit: limit});
+    }
+    if(wliststate == "Anonymous Wishes")
+    {
+      return Wishes.find({"public": true, anonymous:true}, {sort: {createdOn: -1}, limit: limit});
     }
     else
     {
@@ -351,17 +363,15 @@ Template.wishlist.events({
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
-
   },
 
-  'click .userwishes':function(){
+  'click .anonymouswishes':function(){
     //console.log('dropdown current');
-    Session.set("wishliststate", "User Wishes");
+    Session.set("wishliststate", "Anonymous Wishes");
     Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
-
   },
 
 });

@@ -82,7 +82,7 @@
         <ul class="dropdown-menu" role="menu" aria-labelledby="All Wishes" style="width: 100%;">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="currentwishes">All Wishes</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="mywishes">My Wishes</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="userwishes">User Wishes</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="anonymouswishes">Anonymous Wishes</a></li>
         </ul>
       </div>
     </div>
@@ -187,7 +187,11 @@
     {{else}}
       {{#if wish}}
         {{#with wish}}
-          <p style="color: lightgrey;"><small>Posted by <a href="#" class="profile"><img src={{creatorPic}} alt={{creatorName}} height="31" width="27"> {{creatorName}}!</a></small></p>
+          {{#if anonymous}}
+            <p style="color: lightgrey;"><small>Posted by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</small></p>
+          {{else}}
+            <p style="color: lightgrey;"><small>Posted by <a href="#" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
+          {{/if}}
           <h1>{{title}}</h1>
 
           <div class="description">{{description}}</div>
@@ -298,15 +302,16 @@
 
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" class="private"> Private wish &mdash; invitees only
+                  <input type="checkbox" class="anonymous"> Secret wish &mdash; Post Anonymously
                 </label>
               </div>                      
 
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" class="anonymous"> Secret wish &mdash; Post Anonymously
+                  <input type="checkbox" class="private"> Private wish &mdash; invitees only
                 </label>
               </div>                      
+
 
             </div>
           </form>
