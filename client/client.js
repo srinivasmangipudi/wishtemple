@@ -15,6 +15,9 @@ Meteor.startup(function () {
     { 
       $('#addwish').val("");
       $('#adddesc').val("");
+      $('#addanonymous').val("");
+      $('#addprivate').val("");
+
 
       $('#myModal').modal('show'); 
     }
@@ -119,6 +122,9 @@ UI.registerHelper('wlDisplayNameForWish', function(wish_id) {
   if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
     return "Anonymous";
 
+  if(wish.public === false)
+    return "Secret";
+
   var user = Meteor.users.findOne(wish.owner);
   if (user._id === Meteor.userId())
     return "me";
@@ -131,6 +137,9 @@ UI.registerHelper('wlDisplayPicForWish', function(wish_id) {
   var wish = Wishes.findOne(wish_id);
   if(wish.hasOwnProperty("anonymous") && wish.anonymous === true)
     return displayPic("anonymous", "small");
+
+  if(wish.public === false)
+    return displayPic("secret", "small");
 
   var user = Meteor.users.findOne(wish.owner);
   return displayPic(user, "small");

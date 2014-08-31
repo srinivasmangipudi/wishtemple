@@ -200,7 +200,11 @@ profileName = function (user) {
 displayPic = function(user, type){
   if(user == "anonymous")
   {
-     return "/images/profile_anon.png";    
+     return "/images/profile_anon.png";
+  }
+  else if(user == "secret")
+  {
+     return "/images/profile_secret.png";
   }
   else if (user.services && user.services.facebook)
   {

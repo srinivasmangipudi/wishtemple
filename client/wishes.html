@@ -234,11 +234,11 @@
 
 <template name="attendance">
   <div class="attendance well well-small">
-    <div class="who"><span class="label label-inverse" style=""><b>Shared with</b></span></div>
+    <div class="who"><span class="label label-default" style=""><b>Shared with</b></span></div>
     {{#if public}}
       <div>
         <b>Everyone</b>
-        <span class="label label-inverse pull-right" style="background-color: #fdf102;">Fulfil ?</span>
+        <span class="label label-default pull-right" style="color: #fdf102;">Fulfilment Offers</span>
       </div>
     {{/if}}
 
@@ -302,13 +302,13 @@
 
               <div class="checkbox">
                 <label style="color: #03c1fd;"> 
-                  <input type="checkbox" class="anonymous"> Anonymous Wish &mdash; "everyone will see, no one will know!"
+                  <input type="checkbox" class="anonymous" id="addanonymous"> Anonymous Wish &mdash; "everyone will see, no one will know!"
                 </label>
               </div>                      
 
               <div class="checkbox">
                 <label style="color: red;"> 
-                  <input type="checkbox" class="private"> Secret Wish &mdash; "only invitees will see & know!"
+                  <input type="checkbox" class="private" id="addprivate"> Secret Wish &mdash; "only invitees will see & know!"
                 </label>
               </div>                      
 
