@@ -12,14 +12,13 @@ Meteor.startup(function () {
       Session.set("wishliststate", "All Wishes");
 
     if(Session.get("showCreateDialog"))
-    { 
+    {
       $('#addwish').val("");
       $('#adddesc').val("");
       $('#addanonymous').val("");
       $('#addprivate').val("");
 
-
-      $('#myModal').modal('show'); 
+      $('#myModal').modal('show');
     }
     else
       { $('#myModal').modal('hide'); }
@@ -537,6 +536,19 @@ Template.inviteDialog.displayName = function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Wishmap functions
+
+Template.myWishmap.events({
+  'click .getLoc': function(){
+  
+  //console.log("inLoc-> ");
+  navigator.geolocation.getCurrentPosition(function GetLocation(location) {
+    //console.log(location.coords.latitude);
+    //console.log(location.coords.longitude);
+    //console.log(location.coords.accuracy);
+    openCreateDialog(location.coords.latitude, location.coords.longitude);
+    });
+  }
+});
 
 var mapa;
 var currentPopup;
