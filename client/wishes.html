@@ -234,7 +234,7 @@
 
 <template name="attendance">
   <div class="attendance well well-small">
-    <div class="who"><span class="label label-inverse" style="color: #03c1fd;"><b>Shared with</b></span></div>
+    <div class="who"><span class="label label-inverse" style=""><b>Shared with</b></span></div>
     {{#if public}}
       <div>
         <b>Everyone</b>
@@ -301,14 +301,14 @@
               <textarea class="description form-control" id="adddesc" placeholder="Enter description..."></textarea>
 
               <div class="checkbox">
-                <label>
-                  <input type="checkbox" class="anonymous"> Secret wish &mdash; Post Anonymously
+                <label style="color: #03c1fd;"> 
+                  <input type="checkbox" class="anonymous"> Anonymous Wish &mdash; "everyone will see, no one will know!"
                 </label>
               </div>                      
 
               <div class="checkbox">
-                <label>
-                  <input type="checkbox" class="private"> Private wish &mdash; invitees only
+                <label style="color: red;"> 
+                  <input type="checkbox" class="private"> Secret Wish &mdash; "only invitees will see & know!"
                 </label>
               </div>                      
 

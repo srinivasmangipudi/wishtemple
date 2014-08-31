@@ -12,7 +12,12 @@ Meteor.startup(function () {
       Session.set("wishliststate", "All Wishes");
 
     if(Session.get("showCreateDialog"))
-      { $('#myModal').modal('show'); }
+    { 
+      $('#addwish').val("");
+      $('#adddesc').val("");
+
+      $('#myModal').modal('show'); 
+    }
     else
       { $('#myModal').modal('hide'); }
 
@@ -429,8 +434,6 @@ Template.createDialog.events({
     var public = ! template.find(".private").checked;
     var anonymous = template.find(".anonymous").checked;
     var coords = Session.get("createCoords");
-
-    console.log("anon:" + anonymous);
 
     if (title.length && description.length) {
       var id = createWish({
