@@ -27,6 +27,10 @@
     min-height: 100%;
 }
 
+.wishlist-list{
+    max-height: 900px; 
+    overflow-y: auto;
+}
 
 .wishlist-form{
 background-color: #03c1fd;
