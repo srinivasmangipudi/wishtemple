@@ -446,7 +446,8 @@ Template.createDialog.rendered = function () {
           separator: ' of ',
           preText: 'You have ',
           postText: ' chars remaining.',
-          validate: true
+          validate: true,
+          placement: 'bottom'
         });
 
   $('#adddesc').maxlength({
@@ -457,7 +458,8 @@ Template.createDialog.rendered = function () {
           separator: ' of ',
           preText: 'You have ',
           postText: ' chars remaining.',
-          validate: true
+          validate: true,
+          placement: 'bottom'
         });
 
 };
