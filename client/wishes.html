@@ -14,6 +14,7 @@
   <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
   <script src="/js/Control.OSMGeocoder.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
+  <script src="/js/bootstrap-maxlength.min.js"></script>
 
   <title>WishTemple</title>
   <link rel="shortcut icon" href="../images/favicon.ico">
@@ -296,10 +297,10 @@
               {{/if}}
 
               <label class="sr-only" for="addwish">Title</label>
-              <input type="text" class="title form-control" id="addwish" placeholder="Enter Wish">
+              <input type="text" class="title form-control" id="addwish" placeholder="Enter Wish" maxlength="100">
 
               <label class="sr-only" for="adddesc">Title</label>
-              <textarea class="description form-control" id="adddesc" placeholder="Enter description..."></textarea>
+              <textarea class="description form-control" id="adddesc" placeholder="Enter description..." maxlength="255"></textarea>
 
               <div class="checkbox">
                 <label style="color: #03c1fd;"> 

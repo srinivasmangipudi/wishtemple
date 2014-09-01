@@ -435,6 +435,33 @@ Template.page.showCreateDialog = function () {
   return Session.get("showCreateDialog");
 };
 
+Template.createDialog.rendered = function () {
+  console.log("Template rendered - Settings");
+
+  $('#addwish').maxlength({
+          alwaysShow: true,
+          threshold: 10,
+          warningClass: "label label-success",
+          limitReachedClass: "label label-danger",
+          separator: ' of ',
+          preText: 'You have ',
+          postText: ' chars remaining.',
+          validate: true
+        });
+
+  $('#adddesc').maxlength({
+          alwaysShow: true,
+          threshold: 10,
+          warningClass: "label label-success",
+          limitReachedClass: "label label-danger",
+          separator: ' of ',
+          preText: 'You have ',
+          postText: ' chars remaining.',
+          validate: true
+        });
+
+};
+
 Template.createDialog.events({
   'click .save': function (event, template) {
     var title = template.find(".title").value;
@@ -488,7 +515,6 @@ Template.createDialog.events({
       Session.set("showCreateDialog", false);
       //console.log('set false');
     }
-      
   },
 
 });
