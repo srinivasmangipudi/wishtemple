@@ -580,6 +580,8 @@ Template.myWishmap.events({
 
 var mapa;
 var currentPopup;
+var wishCulsterGroup;
+var wishFeatureGroup;
 
 function centerMap(e) {
     mapa.panTo(e.latlng);
@@ -614,8 +616,9 @@ function addWishOnMap(e)
 function initMap()
 {
   var tile = new L.StamenTileLayer("watercolor");
-
   var m_wishes = L.featureGroup();
+  wishCulsterGroup = new L.MarkerClusterGroup();
+  wishFeatureGroup = L.featureGroup();
 
   mapa = new L.Map("wishmap", {
     center: new L.LatLng(51.505, -0.09),
@@ -715,15 +718,18 @@ function addWishMarkersOnMap()
   var currWish;
   for(var k=0; k<wws.length; k++)
   {
-    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
+    //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
+    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title);
     marker._leaflet_id = wws[k]._id;
     lastId = wws[k]._id;
     //console.log(marker._leaflet_id);
     marker.on('click', onClick);
     marker.openPopup();
     currWish = wws[k];
+    wishCulsterGroup.addLayer(marker);
   }
-
+  wishFeatureGroup.addLayer(wishCulsterGroup);
+  mapa.addLayer(wishFeatureGroup);
   Session.set("selected", lastId);
   Session.set("dirty", "false");
 

@@ -5,9 +5,13 @@
   <link rel="stylesheet" href="/css/Control.OSMGeocoder.css" />
   <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
   <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css' rel='stylesheet' />
+  <link rel="stylesheet" href="/css/MarkerCluster.css" />
+  <link rel="stylesheet" href="/css/MarkerCluster.Default.css" />
+
   <!--[if lt IE 9]>
     <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
   <![endif]-->
+
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   <script src="/js/leaflet.contextmenu.js"></script>
   <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
@@ -15,6 +19,7 @@
   <script src="/js/Control.OSMGeocoder.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
   <script src="/js/bootstrap-maxlength.min.js"></script>
+  <script src="/js/leaflet.markercluster.js"></script>
 
   <title>WishTemple</title>
   <link rel="shortcut icon" href="../images/favicon.ico">
@@ -89,7 +94,7 @@
         </ul>
       </div>
     </div>
-    <div>
+    <div class="wishlist-list">
       <table class="table table-hover">
         <tbody>
           {{#each wishlist}}
