@@ -118,6 +118,8 @@
 
   {{> inviteDialog}}
 
+  {{> fulfillDialog}}
+
   <div style="">
 
     <div class="row">
@@ -195,9 +197,9 @@
       {{#if wish}}
         {{#with wish}}
           {{#if anonymous}}
-            <p style="color: lightgrey;"><small>Posted by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</small></p>
+            <p style="color: lightgrey;"><small>Wished by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</small></p>
           {{else}}
-            <p style="color: lightgrey;"><small>Posted by <a href="#" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
+            <p style="color: lightgrey;"><small>Wished by <a href="#" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
           {{/if}}
           <h1>{{title}}</h1>
 
@@ -205,25 +207,38 @@
 
           {{> attendance}}
 
-          <div class="rsvp-buttons">
-            {{#if currentUser}}
-              <input type="button" value="Fulfill Wish!"
-                     class="btn btn-success btn-small rsvp_yes {{maybeChosen "yes"}}">
-              <input type="button" value="Maybe"
-                     class="btn btn-info btn-small rsvp_maybe {{maybeChosen "maybe"}}">
-              <input type="button" value="No"
-                     class="btn btn-default btn-small rsvp_no {{maybeChosen "no"}}">
-            {{else}}
-              <i>Sign in to fulfil this wish.</i>
-            {{/if}}
-          </div>
-
           {{#if canRemove}}
+
+            <div class="fulfill-buttons">
+              {{#if currentUser}}
+                <input type="button" value="Mark Wish Fulfilled!"
+                       class="btn btn-default btn-lg wish_fulfilled {{maybeChosen "yes"}}" style="background-color: #fdf102; color: darkgray;">
+              {{else}}
+                <i>Sign in to fulfil this wish.</i>
+              {{/if}}
+            </div>
+
             <div class="alert alert-info" ><p style="text-align:center;"><small>
                 You posted this wish and nobody has sent fulfillment offer.
                 <b><a href="#" class="remove">Delete this Wish</a></b>.
             </small></p></div>
+          {{else}}
+
+            <div class="rsvp-buttons">
+              {{#if currentUser}}
+                <input type="button" value="Fulfill Wish!"
+                       class="btn btn-success btn-small rsvp_yes {{maybeChosen "yes"}}">
+                <input type="button" value="Maybe"
+                       class="btn btn-info btn-small rsvp_maybe {{maybeChosen "maybe"}}">
+                <input type="button" value="No"
+                       class="btn btn-default btn-small rsvp_no {{maybeChosen "no"}}">
+              {{else}}
+                <i>Sign in to fulfil this wish.</i>
+              {{/if}}
+            </div>
+
           {{/if}}
+
         {{/with}}
       {{else}}
         <h1 class="muted pagination-centered">
@@ -327,6 +342,40 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary save">Add Wish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="fulfillDialog">
+  <div class="modal fade" id="fulfillModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fulfillModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+      <div class="modal-content show">
+        <div class="modal-header">
+          <button type="button" class="close cancel" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="fulfillModalLabel">Fulfill Wish</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group" style="width=100%;">
+              {{#if error}}
+                <div class="alert alert-error">{{error}}</div>
+              {{/if}}
+
+              <label class="sr-only" for="addfulfillmesg">Title</label>
+              <input type="text" class="title form-control" id="addfulfillmesg" placeholder="Message title" maxlength="100">
+
+              <label class="sr-only" for="addfulfilldesc">Title</label>
+              <textarea class="description form-control" id="addfulfilldesc" placeholder="Enter fulfillment message..." maxlength="255"></textarea>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary save">Fulfill Wish!</button>
         </div>
       </div>
     </div>

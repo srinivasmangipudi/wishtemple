@@ -87,7 +87,6 @@ Meteor.methods({
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in");
 
-    //var isAnon = false;
     var id = options._id || Random.id();
     Wishes.insert({
       _id: id,
@@ -97,6 +96,7 @@ Meteor.methods({
       title: options.title,
       description: options.description,
       anonymous: !! options.anonymous,
+      isfulfilled: false,
       createdOn: Date(),
       updatedOn: Date(),
       public: !! options.public,
@@ -178,6 +178,26 @@ Meteor.methods({
       Wishes.update(wishId,
                      {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
     }
+  },
+
+  wish_fulfilled: function(wishId, value){
+    check(wishId, String);
+    check(value, String);
+    if (! this.userId)
+      throw new Meteor.Error(403, "You must be logged in to RSVP");
+        var wish = Wishes.findOne(wishId);
+    if (! _.contains(['yes'], value))
+      throw new Meteor.Error(400, "Invalid Fulfillment");
+    if (! wish)
+      throw new Meteor.Error(404, "No such wish");
+    if (! wish.public && wish.owner !== this.userId)
+      // private, but let's not tell this to the user
+      throw new Meteor.Error(403, "No such wish");
+
+    console.log("wishId:" + wishId);
+    console.log("inside wish fulfilled - no probs");
+
+    Wishes.update(wishId, {$set: {isfulfilled:true}});
   },
 
 });

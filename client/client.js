@@ -11,6 +11,7 @@ Meteor.startup(function () {
     if(!Session.get("wishliststate"))
       Session.set("wishliststate", "All Wishes");
 
+    //show hide modals depending on state
     if(Session.get("showCreateDialog"))
     {
       $('#addwish').val("");
@@ -27,6 +28,11 @@ Meteor.startup(function () {
       { $('#inviteModal').modal('show'); }
     else
       { $('#inviteModal').modal('hide'); }
+
+    if(Session.get("showFulfillDialog"))
+      { $('#fulfillModal').modal('show'); }
+    else
+      { $('#fulfillModal').modal('hide'); }
 
     //select amount of fresh wishes to load
     Session.set('limit', 100);
@@ -243,6 +249,7 @@ Template.details.error = function () {
 
 Template.details.events({
   'click .rsvp_yes': function () {
+    //openFulfillDialog();
     Meteor.call("rsvp", Session.get("selected"), "yes");
     return false;
   },
@@ -282,6 +289,10 @@ Template.details.events({
     Session.set("profileNameChanged", "");
     return true;
   },
+  'click .wish_fulfilled': function(event, template){
+    console.log("wish fulfilled clicked");
+    Meteor.call("wish_fulfilled", Session.get("selected"), "yes");
+  },
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -311,7 +322,7 @@ Template.wishlist.wishlist = function()
 
   if(user)
   {
-      return Wishes.find({"public": true, owner:user, anonymous:false}, {sort: {createdOn: -1}, limit: limit});
+      return Wishes.find({"public": true, owner:user, anonymous:false, isfulfilled:false}, {sort: {createdOn: -1}, limit: limit});
   }
   else
   {
@@ -322,12 +333,12 @@ Template.wishlist.wishlist = function()
     }
     if(wliststate == "Anonymous Wishes")
     {
-      return Wishes.find({"public": true, anonymous:true}, {sort: {createdOn: -1}, limit: limit});
+      return Wishes.find({"public": true, anonymous:true, isfulfilled:false}, {sort: {createdOn: -1}, limit: limit});
     }
     else
     {
       // All Wishes
-      return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+      return Wishes.find({"public": true, isfulfilled:false}, {sort: {createdOn: -1}, limit: limit});
     }
     
   }
@@ -388,6 +399,7 @@ Template.wishlist.events({
   },
 
 });
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wish attendance widget
 
@@ -524,6 +536,19 @@ Template.createDialog.events({
 Template.createDialog.error = function () {
   return Session.get("createError");
 };
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Fulfill dialog
+
+var openFulfillDialog = function () {
+  Session.set("showFulfillDialog", true);
+};
+
+/*Template.page.showFulfillDialog = function () {
+  console.log("setting true");
+  return Session.get("showFulfillDialog");
+};*/
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -750,7 +775,12 @@ function getRandomColor() {
 }
 
 
+/* 
 
+-- updating mongo db
+db.wishes.update({},{$set: {anonymous:false}},false, true);
+
+*/
 
 
 
