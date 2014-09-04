@@ -232,12 +232,16 @@
 
             <div class="rsvp-buttons">
               {{#if currentUser}}
-                <input type="button" value="Fulfill Wish!"
-                       class="btn btn-success btn-small rsvp_yes {{maybeChosen "yes"}}">
-                <input type="button" value="Maybe"
-                       class="btn btn-info btn-small rsvp_maybe {{maybeChosen "maybe"}}">
-                <input type="button" value="No"
-                       class="btn btn-default btn-small rsvp_no {{maybeChosen "no"}}">
+                {{#if isFulfilled}}
+                  <span class="" style="color: #03c1fd;"><strong>This wish is fulfilled!</strong></span>
+                {{else}}
+                  <input type="button" value="Fulfill Wish!"
+                         class="btn btn-success btn-small rsvp_yes {{maybeChosen "yes"}}">
+                  <input type="button" value="Maybe"
+                         class="btn btn-info btn-small rsvp_maybe {{maybeChosen "maybe"}}">
+                  <input type="button" value="No"
+                         class="btn btn-default btn-small rsvp_no {{maybeChosen "no"}}">
+                {{/if}}
               {{else}}
                 <i>Sign in to fulfil this wish.</i>
               {{/if}}
