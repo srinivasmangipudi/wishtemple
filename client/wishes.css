@@ -14,6 +14,10 @@
     margin-bottom: -100px;
 }
 
+.navbar-nav li{
+ line-height: 50px;
+}
+
 .welcome {
     background-image: url('../images/welcome_screen.png');
 }
