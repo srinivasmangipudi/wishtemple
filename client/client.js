@@ -181,6 +181,14 @@ Template.details.isAnonymous = function () {
     return false;
 };
 
+Template.details.isFulfilled = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  if(wish.hasOwnProperty("isfulfilled") && wish.isfulfilled === true)
+    return true;
+  else
+    return false;
+};
+
 Template.details.anyWishes = function () {
   return Wishes.find().count() > 0;
 };

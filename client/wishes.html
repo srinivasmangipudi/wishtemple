@@ -211,8 +211,13 @@
 
             <div class="fulfill-buttons">
               {{#if currentUser}}
-                <input type="button" value="Mark Wish Fulfilled!"
-                       class="btn btn-default btn-lg wish_fulfilled {{maybeChosen "yes"}}" style="background-color: #fdf102; color: darkgray;">
+                {{#if isFulfilled}}
+                  <input type="button" value="Wish Fulfilled!"
+                         class="btn btn-default btn-lg wish_fulfilled {{maybeChosen "yes"}}" disabled="disabled" style="background-color: #fdf102; color: darkgray;">
+                {{else}}
+                  <input type="button" value="Mark Wish Fulfilled!"
+                         class="btn btn-default btn-lg wish_fulfilled {{maybeChosen "yes"}}" style="background-color: #fdf102; color: #03c1fd;">
+                {{/if}}
               {{else}}
                 <i>Sign in to fulfil this wish.</i>
               {{/if}}
