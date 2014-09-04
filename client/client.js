@@ -150,7 +150,7 @@ UI.registerHelper('wlDisplayPicForWish', function(wish_id) {
   return displayPic(user, "small");
 });
 
-UI.registerHelper('systemLatestWish', function() {
+UI.registerHelper('systemLatestWishTitle', function() {
   //code -- call {{stub}} anywhere in template
   console.log("in stub systemlatestwish:");
   var wish = Wishes.findOne({public: true}, {sort: {createdOn:-1}});
@@ -162,6 +162,21 @@ UI.registerHelper('systemLatestWish', function() {
     return "";
 });
 
+UI.registerHelper('systemLatestWishId', function(checkid) {
+  //code -- call {{stub}} anywhere in template
+  console.log("in stub systemlatestwishId:");
+  var wish = Wishes.findOne({public: true}, {sort: {createdOn:-1}});
+  console.log("latest:"+wish);
+
+  if(wish && wish._id == checkid)
+    return getRandomColor();
+  else
+    return "";
+});
+
+UI.registerHelper('getRandomColor', function(checkid) {
+  return getRandomColor();
+});
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar

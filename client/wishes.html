@@ -36,7 +36,7 @@
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#"><img src="../images/wishtemple.png" style="height:30px; width:30px;"> WishTemple</a></li>
-            <li><span style="color: #03c1fd;"><strong>&nbsp; &nbsp;{{systemLatestWish}}</strong></span></li>
+            <li><span style="color: {{getRandomColor}};"><strong>&nbsp; &nbsp;{{systemLatestWishTitle}}</strong></span></li>
           </ul>
         </div>
 
@@ -101,10 +101,10 @@
         <tbody>
           {{#each wishlist}}
             <tr class="tr_wish" id="{{_id}}">
-              <td >
+              <td style="width:10%;">
                 <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="30px;" width="30px;">
               </td>
-              <td style="">
+              <td style="width:90%;">
                 {{title}}
               </td>
             </tr>
