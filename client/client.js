@@ -343,6 +343,10 @@ Template.wishlist.wishlist = function()
     {
       return Wishes.find({"public": true, anonymous:true, isfulfilled:false}, {sort: {createdOn: -1}, limit: limit});
     }
+    if(wliststate == "Fulfilled Wishes")
+    {
+      return Wishes.find({"public": true, isfulfilled:true}, {sort: {createdOn: -1}, limit: limit});
+    }
     else
     {
       // All Wishes
@@ -400,6 +404,15 @@ Template.wishlist.events({
   'click .anonymouswishes':function(){
     //console.log('dropdown current');
     Session.set("wishliststate", "Anonymous Wishes");
+    Session.set("dirty", "true");
+
+    //var limit = Session.get("limit");
+    //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
+  },
+
+  'click .fulfilledwishes':function(){
+    //console.log('dropdown current');
+    Session.set("wishliststate", "Fulfilled Wishes");
     Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
