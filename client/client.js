@@ -150,6 +150,19 @@ UI.registerHelper('wlDisplayPicForWish', function(wish_id) {
   return displayPic(user, "small");
 });
 
+UI.registerHelper('systemLatestWish', function() {
+  //code -- call {{stub}} anywhere in template
+  console.log("in stub systemlatestwish:");
+  var wish = Wishes.findOne({public: true}, {sort: {createdOn:-1}});
+  console.log("latest:"+wish);
+
+  if(wish)
+    return wish.title;
+  else
+    return "";
+});
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wish details sidebar
 
