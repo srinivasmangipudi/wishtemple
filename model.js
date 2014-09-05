@@ -138,9 +138,14 @@ Meteor.methods({
     }
   },
 
-  rsvp: function (wishId, rsvp) {
+  rsvp: function (wishId, rsvp, title, message) {
     check(wishId, String);
     check(rsvp, String);
+    check(title, String);
+    check(message, String);
+
+    console.log("rsvp fine till now:" + title);
+    
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in to RSVP");
     if (! _.contains(['yes', 'no', 'maybe'], rsvp))

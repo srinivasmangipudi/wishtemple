@@ -285,16 +285,21 @@ Template.details.error = function () {
 
 Template.details.events({
   'click .rsvp_yes': function () {
-    //openFulfillDialog();
-    Meteor.call("rsvp", Session.get("selected"), "yes");
+    Session.set("x_rsvp_answer", "yes");
+    openFulfillDialog();
+    //Meteor.call("rsvp", Session.get("selected"), "yes");
     return false;
   },
   'click .rsvp_maybe': function () {
-    Meteor.call("rsvp", Session.get("selected"), "maybe");
+    Session.set("x_rsvp_answer", "maybe");
+    openFulfillDialog();
+    //Meteor.call("rsvp", Session.get("selected"), "maybe");
     return false;
   },
   'click .rsvp_no': function () {
-    Meteor.call("rsvp", Session.get("selected"), "no");
+    Session.set("x_rsvp_answer", "no");
+    openFulfillDialog();
+    //Meteor.call("rsvp", Session.get("selected"), "no");
     return false;
   },
   'click .invite': function () {
@@ -599,7 +604,43 @@ var openFulfillDialog = function () {
   return Session.get("showFulfillDialog");
 };*/
 
+Template.fulfillDialog.events({
+  'click .save': function (event, template) {
+    var title = template.find(".title").value;
+    var description = template.find(".description").value;
 
+    if (title.length && description.length) {
+      //get the button state & call the rsvp with message and description.
+      
+      Meteor.call("rsvp", Session.get("selected"), Session.get("x_rsvp_answer"), title, description);
+
+    } else {
+      Session.set("createError",
+                  "It needs a title and a description, or why bother?");
+    }
+    Session.set("showFulfillDialog", false);
+    return false;
+  },
+  'click .cancel': function () {
+    Meteor.call("rsvp", Session.get("selected"), Session.get("x_rsvp_answer"), "", "");
+    Session.set("showFulfillDialog", false);
+    return false;
+  },
+
+  'keyup': function(e) {
+    //console.log('keypress');
+    if(e.which == 27)
+    {
+      Session.set("showFulfillDialog", false);
+      //console.log('set false');
+    }
+  },
+
+});
+
+Template.fulfillDialog.error = function () {
+  return Session.get("fulfillError");
+};
 ///////////////////////////////////////////////////////////////////////////////
 // Invite dialog
 
