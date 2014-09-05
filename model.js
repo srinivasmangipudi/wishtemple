@@ -145,7 +145,7 @@ Meteor.methods({
     check(message, String);
 
     console.log("rsvp fine till now:" + title);
-    
+
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in to RSVP");
     if (! _.contains(['yes', 'no', 'maybe'], rsvp))
@@ -166,13 +166,17 @@ Meteor.methods({
         // update the appropriate rsvp entry with $
         Wishes.update(
           {_id: wishId, "rsvps.user": this.userId},
-          {$set: {"rsvps.$.rsvp": rsvp}});
+          {$set: {"rsvps.$.rsvp": rsvp,
+                  "rsvps.$.title": title,
+                  "rsvps.$.message": message}});
       } else {
         // minimongo doesn't yet support $ in modifier. as a temporary
         // workaround, make a modifier that uses an index. this is
         // safe on the client since there's only one thread.
         var modifier = {$set: {}};
-        modifier.$set["rsvps." + rsvpIndex + ".rsvp"] = rsvp;
+        modifier.$set["rsvps." + rsvpIndex + ".rsvp",
+                      "rsvps." + rsvpIndex + ".title",
+                      "rsvps." + rsvpIndex + ".message"] = rsvp;
         Wishes.update(wishId, modifier);
       }
 
@@ -181,7 +185,7 @@ Meteor.methods({
     } else {
       // add new rsvp entry
       Wishes.update(wishId,
-                     {$push: {rsvps: {user: this.userId, rsvp: rsvp}}});
+                     {$push: {rsvps: {user: this.userId, rsvp: rsvp, title:title, message:message}}});
     }
   },
 
