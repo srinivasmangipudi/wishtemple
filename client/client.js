@@ -58,7 +58,7 @@ Meteor.startup(function () {
       console.log("plotting first lot");
 
       addWishMarkersOnMap();
-      //Session.set("dirty", "false");
+      Session.set("dirty", "false");
     }
 
     var wliststate = Session.get("wishliststate");
@@ -89,7 +89,7 @@ Meteor.startup(function () {
     {
 
       addWishMarkersOnMap();
-      //Session.set("dirty", "true");
+      Session.set("dirty", "false");
     }
     else
     {
@@ -414,7 +414,7 @@ Template.wishlist.events({
 
   'click .mywishes':function(){
     Session.set("wishliststate", "My Wishes");
-    Session.set("dirty", "true");
+    //Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true, owner:Meteor.userId()}, {sort: {createdOn: -1}, limit: limit});
@@ -423,7 +423,7 @@ Template.wishlist.events({
   'click .currentwishes':function(){
     //console.log('dropdown current');
     Session.set("wishliststate", "All Wishes");
-    Session.set("dirty", "true");
+    //Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
@@ -432,7 +432,7 @@ Template.wishlist.events({
   'click .anonymouswishes':function(){
     //console.log('dropdown current');
     Session.set("wishliststate", "Anonymous Wishes");
-    Session.set("dirty", "true");
+    //Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
@@ -441,7 +441,7 @@ Template.wishlist.events({
   'click .fulfilledwishes':function(){
     //console.log('dropdown current');
     Session.set("wishliststate", "Fulfilled Wishes");
-    Session.set("dirty", "true");
+    //Session.set("dirty", "true");
 
     //var limit = Session.get("limit");
     //return Wishes.find({"public": true}, {sort: {createdOn: -1}, limit: limit});
@@ -790,6 +790,7 @@ function addWishMarkersOnMap()
   //console.log(wws);
   var lastId;
   var currWish;
+  wishCulsterGroup.clearLayers();
   for(var k=0; k<wws.length; k++)
   {
     //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
