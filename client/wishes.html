@@ -279,7 +279,7 @@
 
 <template name="attendance">
   <div class="attendance well well-lg">
-    <div class="who"><span class="" style="color:darkgray;"><i>Shared with</i></span></div>
+    <div class="who"><span class="" style="color:darkgray;"><i>Shared with:</i></span></div>
     <hr>
     {{#if public}}
       <div>
@@ -288,20 +288,36 @@
       </div>
     {{/if}}
 
-    {{#each rsvps}}
-      <div>
-        {{rsvpName}}
-        {{#if rsvpIs "yes"}}
-          <span class="label label-success pull-right">Yes</span>
-        {{/if}}
-        {{#if rsvpIs "maybe"}}
-          <span class="label label-info pull-right">Maybe</span>
-        {{/if}}
-        {{#if rsvpIs "no"}}
-          <span class="label label pull-right">No</span>
-        {{/if}}
-      </div>
-    {{/each}}
+    <div class="panel-group" id="accordion">
+      {{#each rsvps}}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{rsvpIndex}}">
+                  {{rsvpName}}
+                </a>
+
+              {{#if rsvpIs "yes"}}
+                <span class="label label-success pull-right">Yes</span>
+              {{/if}}
+              {{#if rsvpIs "maybe"}}
+                <span class="label label-info pull-right">Maybe</span>
+              {{/if}}
+              {{#if rsvpIs "no"}}
+                <span class="label label pull-right">No</span>
+              {{/if}}
+                            </h4>
+
+            </div>
+            <div id="collapse{{rsvpIndex}}" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p><span class="" style="color:darkgray;">Subject: </span><i>{{rsvpTitle}}</i></p>
+                <p><span class="" style="color:darkgray;">Message: </span><i>{{rsvpMessage}}</i></p>
+              </div>
+            </div>
+          </div>
+      {{/each}}
+    </div>
 
     {{#unless public}}
       {{#each outstandingInvitations}}
@@ -379,7 +395,7 @@
       <div class="modal-content show">
         <div class="modal-header">
           <button type="button" class="close cancel" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="fulfillModalLabel">Fulfill Wish</h4>
+          <h4 class="modal-title" id="fulfillModalLabel">Do you have a fulfillment message?</h4>
         </div>
         <div class="modal-body">
           <form role="form">

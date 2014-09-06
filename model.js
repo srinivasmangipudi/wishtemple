@@ -144,8 +144,6 @@ Meteor.methods({
     check(title, String);
     check(message, String);
 
-    console.log("rsvp fine till now:" + title);
-
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in to RSVP");
     if (! _.contains(['yes', 'no', 'maybe'], rsvp))
@@ -174,9 +172,7 @@ Meteor.methods({
         // workaround, make a modifier that uses an index. this is
         // safe on the client since there's only one thread.
         var modifier = {$set: {}};
-        modifier.$set["rsvps." + rsvpIndex + ".rsvp",
-                      "rsvps." + rsvpIndex + ".title",
-                      "rsvps." + rsvpIndex + ".message"] = rsvp;
+        modifier.$set["rsvps." + rsvpIndex + ".rsvp", "rsvps." + rsvpIndex + ".title", "rsvps." + rsvpIndex + ".message"] = rsvp;
         Wishes.update(wishId, modifier);
       }
 

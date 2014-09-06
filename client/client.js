@@ -470,6 +470,27 @@ Template.attendance.outstandingInvitations = function () {
   ]});
 };
 
+Template.attendance.rsvpTitle = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  //var rsvp = Wishes.find({_id:this._id}, {rsvps: {$elemMatch: {'user': this.user}}});
+  console.log(wish.rsvps[0].title);
+  return wish.rsvps[0].title;
+};
+
+Template.attendance.rsvpMessage = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  //var rsvp = Wishes.find({_id:this._id}, {rsvps: {$elemMatch: {'user': this.user}}});
+  console.log(wish.rsvps[0].message);
+  return wish.rsvps[0].message;
+};
+
+Template.attendance.rsvpIndex = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  var rsvpIndex = _.indexOf(_.pluck(wish.rsvps, 'user'), this.user);
+  console.log(rsvpIndex);
+  return rsvpIndex;
+};
+
 Template.attendance.invitationName = function () {
   return displayName(this);
 };
