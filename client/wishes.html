@@ -58,18 +58,15 @@
 
   <div id="wrapper">
       <div id="main" class="container-fluid clear-top" >
-        <div class="row" style="width:100%;height:55px;">
+        <div class="row" style="width:100%;height:50px;"></div>
 
+        <div style="width:100%;"> 
+          {{> myWishmap}}
         </div>
+
         <div class="row" style="width:100%;">
           <div class="col-md-8" style="width:70%; float:left;">
-            <div>
               {{> page}}
-            </div>
-
-            <div style="width:100%;"> 
-              {{> myWishmap}}
-            </div>
           </div>
 
           <div class="col-md-4" style="width:30%; float:right;">
@@ -83,17 +80,68 @@
   <footer class="footer">
     <p style="text-align: center; vertical-align: middle;" class="text-muted credit"><img src="../images/wishtemple.png" style="height:60px; width:60px;"></p>
     <p style="text-align: center; vertical-align: middle; color: white; font-size: 400%;" class="credit"><strong>WishTemple</strong></p>
-    <p style="text-align: center; vertical-align: middle; color: lightgrey; font-size: 200%;" class="credit">Make a Wish, Fulfill a Wish.</p>
+    <p style="text-align: center; vertical-align: middle; color: lightgrey; font-size: 150%;" class="credit">Make a Wish, Fulfill a Wish.</p>
     <p style="text-align: center; vertical-align: middle;" class="text-muted credit"><a href="http://decisiontreecreativelab.wordpress.com/">DecisionTree  CreativeLab</a></p>
     <p style="text-align: center; vertical-align: middle;" class="text-muted credit"><a href="http://srinivasmangipudi.github.io/wishtemple">Github</a></p>
     <p style="text-align: center; vertical-align: middle;" class="text-muted credit"><a href="http://meteor.com">Built on Meteor!</a></p>
 
   </footer>
-
 </body>
 
+<template name="myWishmap">
+  <div class="row">
+    <div id="wishmap" class="wishmap"></div>
+  </div>
+
+  <div class="row" style="">
+    <div class="muted col-md-12 new-wish-block">
+       <button type="button" class="btn btn-lg getLoc"> Make a new Wish! </button>  OR Right-Click on the map to make a new Wish.
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" style="">
+    </div>
+  </div>
+
+</template>
+
+<template name="page">
+  {{> createDialog}}
+
+  {{> inviteDialog}}
+
+  {{> fulfillDialog}}
+
+  <div>
+
+    <div class="row">
+      <div class="col-md-1"></div>
+
+      <div class="col-md-10">
+
+        <div class="header row">
+          <div class="col-md-10">
+            <h3 style="margin-bottom: 0px"></h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10">
+            {{> details}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-1"> </div>
+    </div>
+
+  </div>
+</template>
+
 <template name="wishlist">
-  <div style="">
+  <div>
     <div>
       <div class="dropdown">
         <button class="btn wishlist-form dropdown-toggle" type="button" id="" data-toggle="dropdown" style="display: block; width: 100%;">
@@ -127,67 +175,12 @@
   </div>
 </template>
 
-<template name="page">
-  {{> createDialog}}
-
-  {{> inviteDialog}}
-
-  {{> fulfillDialog}}
-
-  <div style="">
-
-    <div class="row">
-      <div class="col-md-1"></div>
-
-      <div class="col-md-10">
-
-        <div class="header row">
-          <div class="col-md-10">
-            <h3 style="margin-bottom: 0px"></h3>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-10">
-            {{> details}}
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-md-1"> </div>
-    </div>
-
-  </div>
-</template>
-
-
-<template name="myWishmap">
-  <div class="row" style="margin: 0 auto;">
-    <div class="muted col-md-12" style="color: lightgrey;">
-       <button type="button" class="btn btn-lg getLoc" style="color: #fdf102;"> + </button>  Or Right-Click on the map to make a New Wish
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12" style="height:10px;">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div id="wishmap" class="wishmap"></div>
-    </div>
-  </div>
-
-</template>
-
 <template name="details">
   <div class="details">
     {{#if profile}}
       <div class="profile_header">
         <img src={{creatorLargePic}} alt={{whooseProfile}} class="profile-image">
-        <a href="#" class="cancel-profile"><img src="/images/cancel.svg" alt="Return to details" height="20" width="20" class="cancel-profile"></a>
+        <a href="#profile" class="cancel-profile"><img src="/images/cancel.svg" alt="Return to details" height="20" width="20" class="cancel-profile"></a>
           <p class="profile-title"> <h1>{{whooseProfile}}</h1> </p>
       </div>
         
@@ -213,7 +206,7 @@
           {{#if anonymous}}
             <p style="color: lightgrey;"><small>Wished by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</small></p>
           {{else}}
-            <p style="color: lightgrey;"><small>Wished by <a href="#" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
+            <p style="color: lightgrey;"><small>Wished by <a href="#profile" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
           {{/if}}
           <h1>{{title}}</h1>
 

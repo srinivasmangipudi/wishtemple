@@ -14,8 +14,11 @@
     margin-bottom: -100px;
 }
 
-.navbar-nav li{
+.navbar-nav li {
  line-height: 50px;
+}
+.navbar-brand {
+    color: blue;
 }
 
 .welcome {
@@ -31,21 +34,40 @@
     min-height: 100%;
 }
 
+.wishmap {
+   height: 550px;
+   width: 100%;
+   position: relative;
+}
+
+.new-wish-block {
+    padding-top: 15px; 
+    padding-bottom: 15px; 
+    display: inline-block; 
+    text-align: center; 
+    background-color: black; 
+    color: #fdf102; 
+}
+
+.getLoc {
+    background-color: #03c1fd;
+    color: #fdf102; 
+    vertical-align: middle;
+}
+
 .wishlist-list{
     max-height: 960px; 
     overflow-y: auto;
 }
 
 .wishlist-form{
-background-color: #03c1fd;
-color: #fdf102;
-width: 100%;
+    background-color: #03c1fd;
+    color: #fdf102;
+    width: 100%;
 }
-
 .details {
     margin-top: -18px;
 }
-
 .profile-image {
     margin: 0 auto;
     display: block;
@@ -56,11 +78,9 @@ width: 100%;
     -moz-border-radius: 100px;
     border: 1px solid #03c1fd;
 }
-
 .profile-title {
     text-align:center;
 }
-
 .profile-name {
     margin: 0 auto;
     text-align:center;
@@ -84,39 +104,26 @@ width: 100%;
     opacity: .4;
     z-index: 1;
 }
-
 .invite-row .invite {
     margin: 10px 10px 10px 0;
 }
-
 .rsvp-buttons {
     text-align: center;
     margin: 40px 0 40px 0;
 }
-
 .fulfill-buttons {
     text-align: center;
     margin: 40px 0 40px 0;
 }
-
 .description {
     margin: 20px 0 20px 0;
 }
-
 .attendance .who {
     margin-bottom: 5px;
 }
-
 .attendance .invite {
     text-align: center;
 }
-
 .chosen {
     font-weight: bold;
-}
-
-.wishmap {
-   height: 400px;
-   width: 100%;
-   position: relative;
 }
