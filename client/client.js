@@ -709,6 +709,7 @@ Template.myWishmap.events({
     //console.log(location.coords.latitude);
     //console.log(location.coords.longitude);
     //console.log(location.coords.accuracy);
+    console.log(location);
     openCreateDialog(location.coords.latitude, location.coords.longitude);
     });
   }
@@ -856,7 +857,7 @@ function addWishMarkersOnMap()
   for(var k=0; k<wws.length; k++)
   {
     //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
-    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title);
+    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>');
     marker._leaflet_id = wws[k]._id;
     lastId = wws[k]._id;
     //console.log(marker._leaflet_id);
