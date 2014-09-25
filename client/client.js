@@ -473,15 +473,21 @@ Template.attendance.outstandingInvitations = function () {
 Template.attendance.rsvpTitle = function () {
   var wish = Wishes.findOne(Session.get("selected"));
   //var rsvp = Wishes.find({_id:this._id}, {rsvps: {$elemMatch: {'user': this.user}}});
-  //console.log(wish.rsvps[0].title);
-  return wish.rsvps[0].title;
+  //console.log(wish);
+  if(wish.rsvps[0])
+    return wish.rsvps[0].title;
+  else
+    return "";
 };
 
 Template.attendance.rsvpMessage = function () {
   var wish = Wishes.findOne(Session.get("selected"));
   //var rsvp = Wishes.find({_id:this._id}, {rsvps: {$elemMatch: {'user': this.user}}});
   //console.log(wish.rsvps[0].message);
-  return wish.rsvps[0].message;
+  if(wish.rsvps[0])
+    return wish.rsvps[0].message;
+  else
+    return "";
 };
 
 Template.attendance.rsvpIndex = function () {
