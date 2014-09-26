@@ -2,6 +2,8 @@
 
 Meteor.subscribe("directory");
 Meteor.subscribe("wishes");
+Meteor.subscribe("images");
+
 //Meteor.subscribe('freshWishes', Session.get('limit'));
 
 // If no wish selected, or if the selected wish was deleted, select one.
@@ -575,6 +577,16 @@ Template.createDialog.events({
         anonymous: anonymous
       });
 
+      //inserting files
+      var files = template.find(".exampleInputFile").files;
+      console.log(files);
+
+      Images.insert(files[0], function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        console.log("should have uploaded");
+        });
+      console.log("after file insert");
+
       var myIcon = L.icon({
         iconUrl: "/images/user.png",
         iconSize: [25, 25]
@@ -703,6 +715,19 @@ Template.inviteDialog.uninvited = function () {
 Template.inviteDialog.displayName = function () {
   return displayName(this);
 };
+
+////////////////////////////////////////////////////////////////////////////////
+// Images functions
+/*
+Template.myForm.events({
+  'change .myFileInput': function(event, template) {
+    FS.Utility.eachFile(event, function(file) {
+      Images.insert(file, function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+      });
+    });
+  }
+});*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // Wishmap functions

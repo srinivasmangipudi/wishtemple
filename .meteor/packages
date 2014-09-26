@@ -16,4 +16,8 @@ mizzao:bootstrap-3
 natestrauser:font-awesome
 sergeyt:typeahead
 meteorhacks:kadira
+cfs:s3
+cfs:standard-packages
+cfs:filesystem
+cfs:ui
 

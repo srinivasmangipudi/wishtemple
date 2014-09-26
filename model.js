@@ -251,3 +251,9 @@ var contactEmail = function (user) {
     return user.services.facebook.email;
   return null;
 };
+
+///////////////////////////////////////////////////////////////////////////////
+// Images
+Images = new FS.Collection("images", {
+  stores: [new FS.Store.FileSystem("images")]
+});
