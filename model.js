@@ -255,5 +255,31 @@ var contactEmail = function (user) {
 ///////////////////////////////////////////////////////////////////////////////
 // Images
 Images = new FS.Collection("images", {
-  stores: [new FS.Store.FileSystem("images")]
+  stores: [new FS.Store.FileSystem("images")],
+  filter: {
+  maxSize: 3145728,
+  allow: {
+    contentTypes: ['image/*'],
+    extensions: ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG']
+  }},
+  onInvalid: function(message) {
+    console.log(message);
+  }
+});
+
+Images.allow({
+  insert: function(userId, doc) {
+    //return (userId && doc.metadata.owner === userId);
+    return true;
+  },
+  update: function(userId, doc, fieldNames, modifier) {
+    //return (userId === doc.metadata.owner);
+    return true;
+  },
+  remove: function(userId, doc) {
+    return false;
+  },
+  download: function(userId) {
+    return !!userId;
+  }
 });

@@ -581,10 +581,17 @@ Template.createDialog.events({
       var files = template.find(".exampleInputFile").files;
       console.log(files);
 
-      Images.insert(files[0], function (err, fileObj) {
+      var fsFile = new FS.File(files[0]);
+      //fsFile.metadata = {owner: id};
+      Images.insert(fsFile, function (err, fileObj) {
         //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-        console.log("should have uploaded");
+        if(err) {
+            console.log(err);
+          }
+        else
+          console.log("should have uploaded");
         });
+
       console.log("after file insert");
 
       var myIcon = L.icon({
@@ -629,7 +636,6 @@ Template.createDialog.events({
 Template.createDialog.error = function () {
   return Session.get("createError");
 };
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Fulfill dialog
