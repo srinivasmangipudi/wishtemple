@@ -240,7 +240,10 @@ displayPic = function(user, type){
   }
   else
   {
-     return "/images/profile.png";
+    if(type == "small")
+      return "/images/profile.png";
+    else
+      return "/images/profile_large.png";
   }
 };
 
