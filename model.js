@@ -269,8 +269,7 @@ Images = new FS.Collection("images", {
 
 Images.allow({
   insert: function(userId, doc) {
-    //return (userId && doc.metadata.owner === userId);
-    return true;
+    return (userId && doc.metadata.owner === userId);
   },
   update: function(userId, doc, fieldNames, modifier) {
     //return (userId === doc.metadata.owner);
@@ -278,8 +277,5 @@ Images.allow({
   },
   remove: function(userId, doc) {
     return false;
-  },
-  download: function(userId) {
-    return !!userId;
   }
 });

@@ -581,16 +581,18 @@ Template.createDialog.events({
       var files = template.find(".exampleInputFile").files;
       console.log(files);
 
-      var fsFile = new FS.File(files[0]);
-      //fsFile.metadata = {owner: id};
-      Images.insert(fsFile, function (err, fileObj) {
-        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-        if(err) {
-            console.log(err);
-          }
-        else
-          console.log("should have uploaded");
+      if(files.length > 0)
+      {
+        var fsFile = new FS.File(files[0]);
+        fsFile.metadata = {owner: Meteor.userId()};
+        Images.insert(fsFile, function (err, fileObj) {
+          //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+          if(err)
+              console.log(err);
+          else
+            console.log("should have uploaded");
         });
+      }
 
       console.log("after file insert");
 
@@ -599,9 +601,10 @@ Template.createDialog.events({
         iconSize: [25, 25]
       });
 
-      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(title).addTo(mapa);
+      //-- adding marker here for now. but should find a better solution or a common function 
+      //addWishMarkersOnMap();
+      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: title, riseOnHover: true }).bindPopup(title).addTo(mapa);
       marker.openPopup();
-
       marker._leaflet_id = id;
       //console.log("setting marker_id:" + marker._leaflet_id);
 
@@ -894,7 +897,7 @@ function addWishMarkersOnMap()
   for(var k=0; k<wws.length; k++)
   {
     //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
-    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>');
+    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: wws[k].title, riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>');
     marker._leaflet_id = wws[k]._id;
     lastId = wws[k]._id;
     //console.log(marker._leaflet_id);
