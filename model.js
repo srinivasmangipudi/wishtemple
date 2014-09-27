@@ -257,7 +257,23 @@ var contactEmail = function (user) {
 
 ///////////////////////////////////////////////////////////////////////////////
 // Images
+var imageStore = new FS.Store.S3("images", {
+  region: "us-east-1", //optional in most cases
+  accessKeyId: "AKIAJKS5LP4RB2OXIICA", //required if environment variables are not set
+  secretAccessKey: "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", //required if environment variables are not set
+  bucket: "wishtemple", //required
+  ACL: "private", //optional, default is 'private', but you can allow public or secure access routed through your app URL
+  // The rest are generic store options supported by all storage adapters
+  //transformWrite: myTransformWriteFunction, //optional
+  //transformRead: myTransformReadFunction, //optional
+  maxTries: 5 //optional, default 5
+});
+
 Images = new FS.Collection("images", {
+  stores: [imageStore]
+});
+
+/*Images = new FS.Collection("images", {
   stores: [new FS.Store.FileSystem("images")],
   filter: {
   maxSize: 3145728,
@@ -268,7 +284,7 @@ Images = new FS.Collection("images", {
   onInvalid: function(message) {
     console.log(message);
   }
-});
+});*/
 
 Images.allow({
   insert: function(userId, doc) {
