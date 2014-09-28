@@ -181,7 +181,7 @@ UI.registerHelper('getRandomColor', function(checkid) {
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wish details sidebar
+// Wish details
 
 Template.details.profile = function() {
   var user = Session.get("profile");
@@ -217,6 +217,17 @@ Template.details.isFulfilled = function () {
     return true;
   else
     return false;
+};
+
+Template.details.getPic = function () {
+  var wish = Wishes.findOne(Session.get("selected"));
+  var image = Images.findOne({"metadata.owner":wish._id});
+  console.log(wish);
+  console.log(image);
+  if(image)
+    return "https://s3.amazonaws.com/wishtemple/" + image.copies.images.key;
+  else
+    return "";
 };
 
 Template.details.anyWishes = function () {
@@ -580,11 +591,11 @@ Template.createDialog.events({
       //inserting files
       var files = template.find(".exampleInputFile").files;
       console.log(files);
-
+      console.log(id);
       if(files.length > 0)
       {
         var fsFile = new FS.File(files[0]);
-        fsFile.metadata = {owner: Meteor.userId()};
+        fsFile.metadata = {owner: id};
         Images.insert(fsFile, function (err, fileObj) {
           //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
           if(err)

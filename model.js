@@ -288,7 +288,8 @@ Images = new FS.Collection("images", {
 
 Images.allow({
   insert: function(userId, doc) {
-    return (userId && doc.metadata.owner === userId);
+    //return (userId && doc.metadata.owner === userId);
+    return (userId);
   },
   update: function(userId, doc, fieldNames, modifier) {
     //return (userId === doc.metadata.owner);
