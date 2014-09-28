@@ -65,10 +65,10 @@
 }
 
 .track3 {
-    width: 10px;
+    width: 3px;
     background: rgba(0, 0, 0, 0);
-    margin-right: 2px;
-    border-radius: 10px;
+    margin-right: 0px;
+    border-radius: 1.5px;
     -webkit-transition: background 250ms linear;
     transition: background 250ms linear;
 }
@@ -78,16 +78,16 @@
     background: aliceblue; /* Browsers without rgba support */
 }
 .handle3 {
-    width: 7px;
+    width: 3px;
     right: 0;
     background-color: aliceblue;
-    border-radius: 7px;
+    border-radius: 1.5px;
     -webkit-transition: width 250ms;
     transition: width 250ms;
 }
 .track3:hover .handle3,
 .track3.dragging .handle3 {
-    width: 10px;
+    width: 3px;
 }
 .wishlist-form{
     background-color: #03c1fd;
