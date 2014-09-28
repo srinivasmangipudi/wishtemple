@@ -59,7 +59,36 @@
     max-height: 960px; 
     overflow-y: auto;
 }
+.scrollbox3{
+    /*width: 400px;
+    height: 360px;*/
+}
 
+.track3 {
+    width: 10px;
+    background: rgba(0, 0, 0, 0);
+    margin-right: 2px;
+    border-radius: 10px;
+    -webkit-transition: background 250ms linear;
+    transition: background 250ms linear;
+}
+
+.track3:hover,
+.track3.dragging {
+    background: aliceblue; /* Browsers without rgba support */
+}
+.handle3 {
+    width: 7px;
+    right: 0;
+    background-color: aliceblue;
+    border-radius: 7px;
+    -webkit-transition: width 250ms;
+    transition: width 250ms;
+}
+.track3:hover .handle3,
+.track3.dragging .handle3 {
+    width: 10px;
+}
 .wishlist-form{
     background-color: #03c1fd;
     color: #fdf102;
@@ -77,6 +106,13 @@
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
     border: 1px solid #03c1fd;
+}
+.small-profile-pic{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border: 0px;
+
 }
 .profile-title {
     text-align:center;

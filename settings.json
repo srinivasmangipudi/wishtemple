@@ -1,0 +1,13 @@
+{
+    "public": {
+        "AWS": {
+            "images_full_res": {
+                "region": "us-east-1",
+                "bucket": "wishtemple",
+                "folder": "full_images",
+                "ACL": "public-read",
+                "directUrlBase": "https://us-east-1.amazonaws.com/wishtemple"
+            }
+        }
+    }
+}

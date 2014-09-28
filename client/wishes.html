@@ -20,7 +20,8 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
   <script src="/js/bootstrap-maxlength.min.js"></script>
   <script src="/js/leaflet.markercluster.js"></script>
-
+  <script src="/js/enscroll-0.6.1.min.js"></script>
+  
   <title>WishTemple</title>
   <link rel="shortcut icon" href="../images/favicon.ico">
 
@@ -86,6 +87,13 @@
     <p style="text-align: center; vertical-align: middle;" class="text-muted credit"><a href="http://meteor.com">Built on Meteor!</a></p>
 
   </footer>
+  <script>
+  $('.scrollbox3').enscroll({
+    showOnHover: true,
+    verticalTrackClass: 'track3',
+    verticalHandleClass: 'handle3'
+  });
+  </script>
 </body>
 
 <template name="myWishmap">
@@ -155,7 +163,7 @@
         </ul>
       </div>
     </div>
-    <div class="wishlist-list">
+    <div class="wishlist-list scrollbox3">
       <table class="table table-hover">
         <tbody>
           {{#each wishlist}}
@@ -203,7 +211,7 @@
       {{#if wish}}
         {{#with wish}}
           {{#if anonymous}}
-            <p style="color: lightgrey;"><small>Wished by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</small></p>
+            <p style="color: lightgrey;"><small>Wished by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27" > {{wlDisplayNameForWish _id}}!</small></p>
           {{else}}
             <p style="color: lightgrey;"><small>Wished by <a href="#profile" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
           {{/if}}
@@ -371,7 +379,7 @@
                 <div class="form-group">
                   <label for="exampleInputFile">File input</label>
                   <input type="file" class="exampleInputFile" id="exampleInputFile">
-                  <p class="help-block">Example block-level help text here.</p>
+                  <p class="help-block">"You can attach an image with your Wish. (max size 1Mb)"</p>
                 </div>
 
           </form>
