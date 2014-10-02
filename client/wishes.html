@@ -169,7 +169,7 @@
           {{#each wishlist}}
             <tr class="tr_wish" id="{{_id}}">
               <td style="width:10%;">
-                <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="30px;" width="30px;">
+                <img class="small-profile-pic" src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="30px;" width="30px;">
               </td>
               <td style="width:90%;">
                 {{title}}
@@ -186,11 +186,10 @@
   <div class="details">
     {{#if profile}}
       <div class="profile_header">
-        <img src={{creatorLargePic}} alt={{whooseProfile}} class="profile-image">
+        <img src={{creatorLargePic}} alt={{whooseProfile}} class="profile-image img-responsive">
         <a href="#profile" class="cancel-profile"><img src="/images/cancel.svg" alt="Return to details" height="20" width="20" class="cancel-profile"></a>
           <p class="profile-title"> <h1>{{whooseProfile}}</h1> </p>
       </div>
-        
       <div class="form-group has-success has-feedback" style="width=100%;">
         {{#if isMyProfile}}
           {{#if error}}
@@ -204,8 +203,7 @@
         {{/if}}
       </div>
 
-      <div class="col-md-12" style="height:50px;">
-      </div>
+      <div class="col-md-12" style="height:50px;"></div>
 
     {{else}}
       {{#if wish}}
@@ -213,7 +211,7 @@
           {{#if anonymous}}
             <p style="color: lightgrey;"><small>Wished by <img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27" > {{wlDisplayNameForWish _id}}!</small></p>
           {{else}}
-            <p style="color: lightgrey;"><small>Wished by <a href="#profile" class="profile"><img src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="31" width="27"> {{wlDisplayNameForWish _id}}!</a></small></p>
+            <p style="color: lightgrey;"><small>Wished by <a href="#profile" class="profile"><img class="small-profile-pic" src={{wlDisplayPicForWish _id}} alt={{wlDisplayNameForWish _id}} height="30" width="30"> {{wlDisplayNameForWish _id}}!</a></small></p>
           {{/if}}
           <h1>{{title}}</h1>
 
@@ -297,16 +295,16 @@
                   {{rsvpName}}
                 </a>
 
-              {{#if rsvpIs "yes"}}
-                <span class="label label-success pull-right">Yes</span>
-              {{/if}}
-              {{#if rsvpIs "maybe"}}
-                <span class="label label-info pull-right">Maybe</span>
-              {{/if}}
-              {{#if rsvpIs "no"}}
-                <span class="label label pull-right">No</span>
-              {{/if}}
-                            </h4>
+                {{#if rsvpIs "yes"}}
+                  <span class="label label-success pull-right">Yes</span>
+                {{/if}}
+                {{#if rsvpIs "maybe"}}
+                  <span class="label label-info pull-right">Maybe</span>
+                {{/if}}
+                {{#if rsvpIs "no"}}
+                  <span class="label label pull-right">No</span>
+                {{/if}}
+              </h4>
 
             </div>
             <div id="collapse{{rsvpIndex}}" class="panel-collapse collapse">

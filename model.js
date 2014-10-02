@@ -236,7 +236,7 @@ displayPic = function(user, type){
     if(type == "small")
       return "http://graph.facebook.com/" + user.services.facebook.id + "/picture";
     else
-      return "http://graph.facebook.com/" + user.services.facebook.id + "/picture?&type=large";
+      return "http://graph.facebook.com/" + user.services.facebook.id + "/picture?&type=square&width=200&height=200";
   }
   else
   {
