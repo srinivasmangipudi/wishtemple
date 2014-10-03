@@ -578,6 +578,12 @@ Template.createDialog.events({
     var anonymous = template.find(".anonymous").checked;
     var coords = Session.get("createCoords");
 
+    if (!Meteor.userId()) // must be logged in to create events
+    {
+      console.log("show message to create account/login");
+      Session.set("showLoginAlert", true);
+      return;
+    }
     if (title.length && description.length) {
       var id = createWish({
         title: title,
@@ -644,7 +650,6 @@ Template.createDialog.events({
       //console.log('set false');
     }
   },
-
 });
 
 Template.createDialog.error = function () {
@@ -752,18 +757,33 @@ Template.myForm.events({
 ////////////////////////////////////////////////////////////////////////////////
 // Wishmap functions
 
+Template.myWishmap.showLoginAlert = function () {
+  return Session.get("showLoginAlert");
+};
+
 Template.myWishmap.events({
   'click .getLoc': function(){
   
-  //console.log("inLoc-> ");
-  navigator.geolocation.getCurrentPosition(function GetLocation(location) {
+    if (!Meteor.userId()) // must be logged in to create events
+    {
+      console.log("show message to create account/login");
+      Session.set("showLoginAlert", true);
+      return;
+    }
+    //console.log("inLoc-> ");
+    navigator.geolocation.getCurrentPosition(function GetLocation(location) {
     //console.log(location.coords.latitude);
     //console.log(location.coords.longitude);
     //console.log(location.coords.accuracy);
     console.log(location);
     openCreateDialog(location.coords.latitude, location.coords.longitude);
     });
-  }
+  },
+
+  'click .closeLoginAlert': function () {
+    Session.set("showLoginAlert", false);
+  },
+
 });
 
 var mapa;
@@ -794,6 +814,7 @@ function addWishOnMap(e)
   if (!Meteor.userId()) // must be logged in to create events
   {
     console.log("show message to create account");
+    Session.set("showLoginAlert", true);
     return;
   }
 
