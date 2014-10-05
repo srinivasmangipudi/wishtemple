@@ -20,7 +20,9 @@
 .navbar-brand {
     color: blue;
 }
-
+.navbar {
+ opacity: .9; 
+}
 .welcome {
     background-image: url('../images/welcome_screen.png');
 }
