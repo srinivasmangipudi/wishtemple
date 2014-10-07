@@ -467,6 +467,164 @@ Template.wishlist.events({
 
 });
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Create Wish dialog
+
+var openCreateDialog = function (x, y) {
+  Session.set("createCoords", {x: x, y: y});
+  Session.set("createError", null);
+  Session.set("showCreateDialog", true);
+  //console.log("x:" + x +" y:" + y);
+};
+
+Template.page.showCreateDialog = function () {
+  return Session.get("showCreateDialog");
+};
+
+Template.page.IsFileAttachError = function () {
+  return Session.get("IsFileAttachError");
+};
+
+Template.page.GetFileAttachErrorMesg = function () {
+return Session.get("FileAttachErrorMessage");
+};
+
+Template.createDialog.rendered = function () {
+  console.log("Template rendered - Settings");
+
+  $('#addwish').maxlength({
+          alwaysShow: true,
+          threshold: 10,
+          warningClass: "label label-success",
+          limitReachedClass: "label label-danger",
+          separator: ' of ',
+          preText: 'You have ',
+          postText: ' chars remaining.',
+          validate: true,
+          placement: 'bottom'
+        });
+
+  $('#adddesc').maxlength({
+          alwaysShow: true,
+          threshold: 10,
+          warningClass: "label label-success",
+          limitReachedClass: "label label-danger",
+          separator: ' of ',
+          preText: 'You have ',
+          postText: ' chars remaining.',
+          validate: true,
+          placement: 'bottom'
+        });
+
+};
+
+Template.createDialog.events({
+  'click .save': function (event, template) {
+    var title = template.find(".title").value;
+    var description = template.find(".description").value;
+    var public = ! template.find(".private").checked;
+    var anonymous = template.find(".anonymous").checked;
+    var coords = Session.get("createCoords");
+
+    if (!Meteor.userId()) // must be logged in to create events
+    {
+      console.log("show message to create account/login");
+      Session.set("showLoginAlert", true);
+      return;
+    }
+    if (title.length && description.length)
+    {
+      var id = createWish({
+        title: title,
+        description: description,
+        x: coords.x,
+        y: coords.y,
+        public: public,
+        anonymous: anonymous
+      });
+
+      //inserting files
+      var files = template.find(".exampleInputFile").files;
+      //console.log(files);
+      //console.log(id);
+      if(files.length > 0)
+      {
+        var fsFile = new FS.File(files[0]);
+        fsFile.metadata = {owner: id};
+        var didInsert = Images.insert(fsFile, function (err, fileObj) {
+          //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+          if(err)
+          {
+            console.log(err);
+            Session.set("IsFileAttachError", true);
+            Session.set("FileAttachErrorMessage", err);
+            return false;
+          }
+          else
+          {
+            Session.set("IsFileAttachError", false);
+            Session.set("FileAttachErrorMessage", "");
+            console.log("should have uploaded");
+          }
+        });
+
+        if(!didInsert)
+        {
+          return false;
+        }
+      }
+      console.log("after file insert");
+
+
+
+
+
+      var myIcon = L.icon({
+        iconUrl: "/images/user.png",
+        iconSize: [25, 25]
+      });
+
+      //-- adding marker here for now. but should find a better solution or a common function 
+      //addWishMarkersOnMap();
+      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: title, riseOnHover: true }).bindPopup(title).addTo(mapa);
+      marker.openPopup();
+      marker._leaflet_id = id;
+      //console.log("setting marker_id:" + marker._leaflet_id);
+
+      Session.set("toInvite", id);
+
+      if(! public && Meteor.users.find().count() > 1)
+      {
+        openInviteDialog();
+      }
+      Session.set("showCreateDialog", false);
+      Session.set("dirty", "true");
+    }
+    else
+    {
+      Session.set("createError",
+                  "It needs a title and a description, or why bother?");
+    }
+  },
+  'click .cancel': function () {
+    Session.set("showCreateDialog", false);
+  },
+
+  'keyup': function(e) {
+    //console.log('keypress');
+    if(e.which == 27)
+    {
+      Session.set("showCreateDialog", false);
+      //console.log('set false');
+    }
+  },
+});
+
+Template.createDialog.error = function () {
+  return Session.get("createError");
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wish attendance widget
 
@@ -524,136 +682,6 @@ Template.attendance.nobody = function () {
 
 Template.attendance.canInvite = function () {
   return ! this.public && this.owner === Meteor.userId();
-};
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Create Wish dialog
-
-var openCreateDialog = function (x, y) {
-  Session.set("createCoords", {x: x, y: y});
-  Session.set("createError", null);
-  Session.set("showCreateDialog", true);
-  //console.log("x:" + x +" y:" + y);
-};
-
-Template.page.showCreateDialog = function () {
-  return Session.get("showCreateDialog");
-};
-
-Template.createDialog.rendered = function () {
-  console.log("Template rendered - Settings");
-
-  $('#addwish').maxlength({
-          alwaysShow: true,
-          threshold: 10,
-          warningClass: "label label-success",
-          limitReachedClass: "label label-danger",
-          separator: ' of ',
-          preText: 'You have ',
-          postText: ' chars remaining.',
-          validate: true,
-          placement: 'bottom'
-        });
-
-  $('#adddesc').maxlength({
-          alwaysShow: true,
-          threshold: 10,
-          warningClass: "label label-success",
-          limitReachedClass: "label label-danger",
-          separator: ' of ',
-          preText: 'You have ',
-          postText: ' chars remaining.',
-          validate: true,
-          placement: 'bottom'
-        });
-
-};
-
-Template.createDialog.events({
-  'click .save': function (event, template) {
-    var title = template.find(".title").value;
-    var description = template.find(".description").value;
-    var public = ! template.find(".private").checked;
-    var anonymous = template.find(".anonymous").checked;
-    var coords = Session.get("createCoords");
-
-    if (!Meteor.userId()) // must be logged in to create events
-    {
-      console.log("show message to create account/login");
-      Session.set("showLoginAlert", true);
-      return;
-    }
-    if (title.length && description.length) {
-      var id = createWish({
-        title: title,
-        description: description,
-        x: coords.x,
-        y: coords.y,
-        public: public,
-        anonymous: anonymous
-      });
-
-      //inserting files
-      var files = template.find(".exampleInputFile").files;
-      console.log(files);
-      console.log(id);
-      if(files.length > 0)
-      {
-        var fsFile = new FS.File(files[0]);
-        fsFile.metadata = {owner: id};
-        Images.insert(fsFile, function (err, fileObj) {
-          //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-          if(err)
-              console.log(err);
-          else
-            console.log("should have uploaded");
-        });
-      }
-
-      console.log("after file insert");
-
-      var myIcon = L.icon({
-        iconUrl: "/images/user.png",
-        iconSize: [25, 25]
-      });
-
-      //-- adding marker here for now. but should find a better solution or a common function 
-      //addWishMarkersOnMap();
-      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: title, riseOnHover: true }).bindPopup(title).addTo(mapa);
-      marker.openPopup();
-      marker._leaflet_id = id;
-      //console.log("setting marker_id:" + marker._leaflet_id);
-
-      Session.set("toInvite", id);
-
-      if(! public && Meteor.users.find().count() > 1)
-      {
-        openInviteDialog();
-      }
-      Session.set("showCreateDialog", false);
-      Session.set("dirty", "true");
-    } else {
-      Session.set("createError",
-                  "It needs a title and a description, or why bother?");
-    }
-  },
-  'click .cancel': function () {
-    Session.set("showCreateDialog", false);
-  },
-
-  'keyup': function(e) {
-    //console.log('keypress');
-    if(e.which == 27)
-    {
-      Session.set("showCreateDialog", false);
-      //console.log('set false');
-    }
-  },
-});
-
-Template.createDialog.error = function () {
-  return Session.get("createError");
 };
 
 ///////////////////////////////////////////////////////////////////////////////
