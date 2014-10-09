@@ -259,9 +259,9 @@ var contactEmail = function (user) {
 // Images
 var imageStore = new FS.Store.S3("images", {
   region: "us-east-1", //optional in most cases
-  accessKeyId: "AKIAJKS5LP4RB2OXIICA", //required if environment variables are not set
-  secretAccessKey: "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", //required if environment variables are not set
-  bucket: "wishtemple", //required
+  //accessKeyId: process.env.AWS_KEY, //required if environment variables are not set
+  //secretAccessKey: process.env.AWS_SECRET, //required if environment variables are not set
+  bucket: Meteor.settings.public.AWS_BUCKET, //required
   ACL: "private", //optional, default is 'private', but you can allow public or secure access routed through your app URL
   // The rest are generic store options supported by all storage adapters
   //transformWrite: myTransformWriteFunction, //optional
