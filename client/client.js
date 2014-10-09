@@ -181,6 +181,24 @@ UI.registerHelper('getRandomColor', function(checkid) {
 });
 
 ///////////////////////////////////////////////////////////////////////////////
+// Testing functions
+
+/*Template.s3_tester.events({
+    "click button.upload": function(){
+        var files = $("input.file_bag")[0].files;
+        S3.upload(files,"/subfolder",function(e,r){
+            console.log(r);
+        });
+    }
+});
+
+Template.s3_tester.helpers({
+    "files": function(){
+        return S3.collection.find();
+    }
+});*/
+
+///////////////////////////////////////////////////////////////////////////////
 // Wish details
 
 Template.details.profile = function() {
@@ -225,7 +243,7 @@ Template.details.getPic = function () {
   console.log(wish);
   console.log(image);
   if(image)
-    return "https://s3.amazonaws.com/wishtemple/" + image.copies.images.key;
+    return "https://s3.amazonaws.com/"+ Meteor.settings.public.AWS_BUCKET+"/" + image.copies.images.key;
   else
     return "";
 };
