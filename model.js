@@ -257,7 +257,7 @@ var contactEmail = function (user) {
 
 ///////////////////////////////////////////////////////////////////////////////
 // Images
-var imageStore = new FS.Store.S3("images", {
+/*var imageStore = new FS.Store.S3("images", {
   region: "us-east-1", //optional in most cases
   //accessKeyId: process.env.AWS_KEY, //required if environment variables are not set
   //secretAccessKey: process.env.AWS_SECRET, //required if environment variables are not set
@@ -271,7 +271,7 @@ var imageStore = new FS.Store.S3("images", {
 
 Images = new FS.Collection("images", {
   stores: [imageStore]
-});
+});*/
 
 /*Images = new FS.Collection("images", {
   stores: [new FS.Store.FileSystem("images")],
@@ -286,7 +286,7 @@ Images = new FS.Collection("images", {
   }
 });*/
 
-Images.allow({
+/*Images.allow({
   insert: function(userId, doc) {
     //return (userId && doc.metadata.owner === userId);
     return (userId);
@@ -298,4 +298,4 @@ Images.allow({
   remove: function(userId, doc) {
     return false;
   }
-});
+});*/

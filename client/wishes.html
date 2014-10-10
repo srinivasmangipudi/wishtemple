@@ -380,17 +380,6 @@
               </div>                      
             </div>
 
-            <div class="form-group">
-              <label for="exampleInputFile">File input</label>
-              <input type="file" class="exampleInputFile" id="exampleInputFile">
-              <p class="help-block">"You can attach an image with your Wish. (max size 1Mb)"</p>
-            </div>
-            {{#if IsFileAttachError}}
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close closeLoginAlert" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <strong>Please check image:</strong> {{FileAttachErrorMessage}}!
-              </div>
-            {{/if}}
           </form>
         </div>
 

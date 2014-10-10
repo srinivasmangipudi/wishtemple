@@ -238,13 +238,13 @@ Template.details.isFulfilled = function () {
 };
 
 Template.details.getPic = function () {
-  var wish = Wishes.findOne(Session.get("selected"));
+  /*var wish = Wishes.findOne(Session.get("selected"));
   var image = Images.findOne({"metadata.owner":wish._id});
-  console.log(wish);
-  console.log(image);
+  //console.log(wish);
+  //console.log(image);
   if(image)
     return "https://s3.amazonaws.com/"+ Meteor.settings.public.AWS_BUCKET+"/" + image.copies.images.key;
-  else
+  else */
     return "";
 };
 
@@ -562,6 +562,7 @@ Template.createDialog.events({
         anonymous: anonymous
       });
 
+      /*
       //inserting files
       var files = template.find(".exampleInputFile").files;
       //console.log(files);
@@ -593,7 +594,7 @@ Template.createDialog.events({
         }
       }
       console.log("after file insert");
-
+      */
 
 
 
@@ -1011,6 +1012,17 @@ function getRandomColor() {
 -- updating mongo db
 db.wishes.update({},{$set: {anonymous:false}},false, true);
 
+            <div class="form-group">
+              <label for="exampleInputFile">File input</label>
+              <input type="file" class="exampleInputFile" id="exampleInputFile">
+              <p class="help-block">"You can attach an image with your Wish. (max size 1Mb)"</p>
+            </div>
+            {{#if IsFileAttachError}}
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close closeLoginAlert" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Please check image:</strong> {{FileAttachErrorMessage}}!
+              </div>
+            {{/if}}
 */
 
 

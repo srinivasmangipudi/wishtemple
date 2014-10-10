@@ -11,9 +11,9 @@ Meteor.publish("wishes", function (limit) {
 });
 
 
-Meteor.publish("images", function() {
+/*Meteor.publish("images", function() {
     return Images.find();
-});
+});*/
 
 
 /*Meteor.publish("wishes", function () {
