@@ -1005,9 +1005,17 @@ function addWishMarkersOnMap(lastWishAddedId)
   }
   wishFeatureGroup.addLayer(wishCulsterGroup);
   mapa.addLayer(wishFeatureGroup);
-  Session.set("selected", lastId);
-  Session.set("dirty", "false");
 
+  if(typeof(lastWishAddedId) && wws[k]._id == lastWishAddedId)
+  {
+    Session.set("selected", lastWishAddedId);
+  }
+  else
+  {
+    Session.set("selected", lastId);
+  }
+  
+  Session.set("dirty", "false");
   //mapa.panTo([currWish.x, currWish.y]);
 }
 
