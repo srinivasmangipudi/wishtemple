@@ -1006,7 +1006,7 @@ function addWishMarkersOnMap(lastWishAddedId)
   wishFeatureGroup.addLayer(wishCulsterGroup);
   mapa.addLayer(wishFeatureGroup);
 
-  if(typeof(lastWishAddedId) && wws[k]._id == lastWishAddedId)
+  if(typeof(lastWishAddedId) && "" !== lastWishAddedId)
   {
     Session.set("selected", lastWishAddedId);
   }
