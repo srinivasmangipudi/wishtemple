@@ -59,7 +59,7 @@ Meteor.startup(function () {
     {
       console.log("plotting first lot");
 
-      addWishMarkersOnMap();
+      addWishMarkersOnMap(Session.get("selected"));
       Session.set("dirty", "false");
     }
 
@@ -90,7 +90,7 @@ Meteor.startup(function () {
     if(isDirty == 'true')
     {
 
-      addWishMarkersOnMap();
+      addWishMarkersOnMap(Session.get("selected"));
       Session.set("dirty", "false");
     }
     else
@@ -431,7 +431,7 @@ Template.wishlist.events({
     Session.set("selected", this._id);
     var currWish = Wishes.findOne(this._id);
     mapa.panTo([currWish.x, currWish.y]);
-
+    addWishMarkersOnMap(this._id);
     /*var mlayers = mapa._layers;
     //console.log(mlayers);
 
@@ -605,10 +605,10 @@ Template.createDialog.events({
       });
 
       //-- adding marker here for now. but should find a better solution or a common function 
-      //addWishMarkersOnMap();
-      var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: title, riseOnHover: true }).bindPopup(title).addTo(mapa);
+      addWishMarkersOnMap(id);
+      /*var marker = L.marker([coords.x,coords.y], {icon: myIcon, title: title, riseOnHover: true }).bindPopup(title).addTo(mapa);
       marker.openPopup();
-      marker._leaflet_id = id;
+      marker._leaflet_id = id;*/
       //console.log("setting marker_id:" + marker._leaflet_id);
 
       Session.set("toInvite", id);
@@ -955,8 +955,12 @@ function initMap()
   }).addTo(mapa);
 }
 
-function addWishMarkersOnMap()
+function addWishMarkersOnMap(lastWishAddedId)
 {
+  //console.log("test var pass");
+  //console.log(lastWishAddedId);
+  //console.log(typeof lastWishAddedId);
+
   if(!mapa)
   {
     initMap();
@@ -972,18 +976,32 @@ function addWishMarkersOnMap()
   //console.log(wws);
   var lastId;
   var currWish;
+  var lastWishmarker;
   wishCulsterGroup.clearLayers();
+  wishFeatureGroup.removeLayer(wishCulsterGroup);
   for(var k=0; k<wws.length; k++)
   {
-    //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
-    var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: wws[k].title, riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>');
-    marker._leaflet_id = wws[k]._id;
+    var marker;
     lastId = wws[k]._id;
-    //console.log(marker._leaflet_id);
-    marker.on('click', onClick);
-    marker.openPopup();
-    currWish = wws[k];
-    wishCulsterGroup.addLayer(marker);
+    //console.log(wws[k]);
+
+    if(typeof(lastWishAddedId) && wws[k]._id == lastWishAddedId)
+    {
+      //console.log("last pop");
+      //lastWishmarker = marker;
+      marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: wws[k].title, riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>').addTo(mapa);
+      marker.openPopup();
+    }
+    else
+    {
+      //console.log(" all pop" + wws[k].x);
+      //var marker = L.marker([wws[k].x,wws[k].y], {icon: myIcon, title: Meteor.userId(), riseOnHover: true }).bindPopup(wws[k].title).addTo(mapa);
+      marker = L.marker([wws[k].x, wws[k].y], {icon: myIcon, title: wws[k].title, riseOnHover: true }).bindPopup('<a href="#gotowish">' + wws[k].title + '</a>');
+      marker.on('click', onClick);
+      currWish = wws[k];
+      wishCulsterGroup.addLayer(marker);
+    }
+    marker._leaflet_id = wws[k]._id;
   }
   wishFeatureGroup.addLayer(wishCulsterGroup);
   mapa.addLayer(wishFeatureGroup);
